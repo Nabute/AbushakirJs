@@ -1,0 +1,36 @@
+{
+  "name": "abushakir",
+  "version": "1.0.0",
+  "description": "Ethiopian Datetime and Calendar Reconing system. COPUTUS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nabute/AbushakirJs.git"
+  },
+  "keywords": [
+    "Computus",
+    "Abushakir",
+    "Date",
+    "Time",
+    "Datetime",
+    "Calendar",
+    "Feast",
+    "Holiday",
+    "Fasting",
+    "Ethiopia",
+    "Bahire Hasab",
+    "Bahir",
+    "Hasab",
+    "Orthodox",
+    "Christian"
+  ],
+  "author": "Nabute",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nabute/AbushakirJs/issues"
+  },
+  "homepage": "https://github.com/Nabute/AbushakirJs#readme"
+}
