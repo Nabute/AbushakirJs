@@ -1,5 +1,7 @@
 //
 
+import EtDatetime from "../Abushakir/datetime";
+
 export default interface Datetime {
     year: number;
     month: number;
@@ -13,13 +15,13 @@ export default interface Datetime {
 
     // Methods
     toString(): String;
-    toJson(): String;
+    toJson(): Object;
     toIso8601String(): String;
     //
-    isBefore(other: this): boolean;
-    isAfter(other: this): boolean;
-    isAtSameMomentAs(other: this): boolean;
-    compareTo(other: this): number;
-    add(duration: Utility.Duration): this;
-    subtract(duration: Utility.Duration): this;
+    isBefore(other: EtDatetime): boolean;
+    isAfter(other: EtDatetime): boolean;
+    isAtSameMomentAs(other: EtDatetime): boolean;
+    compareTo(other: EtDatetime): number;
+    add(duration: Utility.Duration): EtDatetime;
+    subtract(duration: Utility.Duration): EtDatetime;
 }
