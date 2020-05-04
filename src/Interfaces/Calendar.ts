@@ -1,20 +1,16 @@
 interface Calendar {
-    getYear(): number;
-    getMonth(): number;
-    getDay(): number;
-    getMonthName(): String;
+  getYear(): number;
+  getMonth(): number;
+  getDay(): number;
+  getMonthName(): String;
 
-    // Methods
-    monthDays(): Array<undefined>;
-    yearDays(): Array<undefined>;
-
+  // Methods
+  monthDays(): Array<undefined>;
+  yearDays(): Array<undefined>;
 }
 
 interface BH {
-    //
+  //
 }
 
-export {
-    Calendar,
-    BH
-}
+export { Calendar, BH };
