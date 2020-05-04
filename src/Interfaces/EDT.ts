@@ -1,15 +1,15 @@
 //
 
 export default interface Datetime {
-    getYear(): number;
-    getMonth(): number;
-    getMonthGeez(): number;
-    getDay(): number;
-    getDayGeez(): String;
-    getHour(): number;
-    getMinute(): number;
-    getSecond(): number;
-    getMillisecond(): number;
+    year: number;
+    month: number;
+    monthGeez: String;
+    day: number;
+    dayGeez: String;
+    hour: number;
+    minute: number;
+    second: number;
+    millisecond: number;
 
     // Methods
     toString(): String;

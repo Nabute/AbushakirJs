@@ -1,7 +1,7 @@
 {
   "name": "abushakir",
   "version": "1.0.0",
-  "description": "Ethiopian Datetime and Calendar Reconing system. COPUTUS.",
+  "description": "Ethiopian Datetime and Calendar Reconing system. COMPUTUS.",
   "main": "index.js",
   "scripts": {
     "test": "jest --config jestconfig.json",
