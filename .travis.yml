@@ -11,4 +11,4 @@ node_js:
   - "12"
 
 script:
-  - npm run test-only
+  - npm run test
