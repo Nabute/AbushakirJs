@@ -1,6 +1,7 @@
 //
 
 import EtDatetime from '../Abushakir/datetime';
+import { Duration } from "../utils/duration";
 
 export default interface Datetime {
   year: number;
@@ -22,6 +23,6 @@ export default interface Datetime {
   isAfter(other: EtDatetime): boolean;
   isAtSameMomentAs(other: EtDatetime): boolean;
   compareTo(other: EtDatetime): number;
-  add(duration: Utility.Duration): EtDatetime;
-  subtract(duration: Utility.Duration): EtDatetime;
+  add(duration: Duration): EtDatetime;
+  subtract(duration: Duration): EtDatetime;
 }
