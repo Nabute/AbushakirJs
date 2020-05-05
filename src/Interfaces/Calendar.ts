@@ -1,12 +1,15 @@
 interface Calendar {
-  getYear(): number;
-  getMonth(): number;
-  getDay(): number;
-  getMonthName(): String;
+  year: number;
+  month: number;
+  day: number;
+  monthName: String;
+  allMonths: Array<String>;
+  dayNumbers: Array<String>;
+  weekdays: Array<String>;
 
   // Methods
-  monthDays(): Array<undefined>;
-  yearDays(): Array<undefined>;
+  monthDays(): Array<any>;
+  yearDays(): Array<any>;
 }
 
 interface BH {

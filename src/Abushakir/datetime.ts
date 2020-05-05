@@ -9,33 +9,34 @@ export default class EtDatetime implements Datetime {
   fixed: number;
 
   // Parameterized Constructor
-  constructor(
-    year: number,
-    month: number = 1,
-    day: number = 1,
-    hour: number = 0,
-    minute: number = 0,
-    second: number = 0,
-    millisecond: number = 0,
-    microsecond: number = 0,
-  ) {
-    this.fixed = this.fixedFromEthiopic(year, month, day);
-    this.moment = this.dateToEpoch(year, month, day, hour, minute, second, millisecond);
+  // constructor(
+  //   year: number,
+  //   month: number = 1,
+  //   day: number = 1,
+  //   hour: number = 0,
+  //   minute: number = 0,
+  //   second: number = 0,
+  //   millisecond: number = 0,
+  //   microsecond: number = 0,
+  // ) {
+  //   this.fixed = this.fixedFromEthiopic(year, month, day);
+  //   this.moment = this.dateToEpoch(year, month, day, hour, minute, second, millisecond);
 
-    if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
-  }
-
-  // constructor(...args: any[]) {
-  //     if (args.length >= 2) {
-
-  //         this.fixed = this.fixedFromEthiopic(this.toNumber(args[0]), args[1] as number, args[2] as number);
-  //         this.moment = this.dateToEpoch(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-
-  //         if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
-  //     } else if (args.length == 1) {
-  //         this.fromMillisecondsSinceEpoch(args[0])
-  //     }
+  //   if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
   // }
+
+  constructor(...args: any[]) {
+    if (args.length >= 2) {
+      this.fixed = this.fixedFromEthiopic(this.toNumber(args[0]), args[1] as number, args[2] as number);
+      this.moment = this.dateToEpoch(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+
+      if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+    } else if (args.length === 1) {
+      this.fromMillisecondsSinceEpoch(args[0]);
+    } else {
+    // when no argument
+    }
+  }
 
   fromMillisecondsSinceEpoch(millisecondsSinceEpoch: number) {
     this.moment = millisecondsSinceEpoch;
@@ -43,7 +44,7 @@ export default class EtDatetime implements Datetime {
     if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
     if (
       Math.abs(millisecondsSinceEpoch) > constants.maxMillisecondsSinceEpoch ||
-      Math.abs(millisecondsSinceEpoch) == constants.maxMillisecondsSinceEpoch
+      Math.abs(millisecondsSinceEpoch) === constants.maxMillisecondsSinceEpoch
     )
       throw new Error(`Calendar out side valid range ${constants.maxMillisecondsSinceEpoch}`);
   }
