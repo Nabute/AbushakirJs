@@ -1,5 +1,8 @@
 //
-interface Tewsak { name: string, val: number };
+interface Tewsak {
+  name: string;
+  val: number;
+}
 
 class Constants {
   private unixEpoch: number = 719163;
@@ -67,15 +70,15 @@ class Constants {
   ];
 
   private yebealTewsak: { [index: string]: number } = {
-    "ነነዌ": 0,
+    ነነዌ: 0,
     'ዓቢይ ጾም': 14,
     'ደብረ ዘይት': 41,
-    "ሆሣዕና": 62,
-    "ስቅለት": 67,
-    "ትንሳኤ": 69,
+    ሆሣዕና: 62,
+    ስቅለት: 67,
+    ትንሳኤ: 69,
     'ርክበ ካህናት': 93,
-    "ዕርገት": 108,
-    "ጰራቅሊጦስ": 118,
+    ዕርገት: 108,
+    ጰራቅሊጦስ: 118,
     'ጾመ ሐዋርያት': 119,
     'ጾመ ድህነት': 121,
   };

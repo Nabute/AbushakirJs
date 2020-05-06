@@ -35,13 +35,13 @@ class Duration {
     if (args.length > 0 && args.length < 7) {
       this.setMicroseconds(
         this.microsecondsPerDay * this.toNumber(args[0]) +
-        this.microsecondsPerHour * this.toNumber(args[1]) +
-        this.microsecondsPerMinute * this.toNumber(args[2]) +
-        this.microsecondsPerSecond * this.toNumber(args[3]) +
-        this.microsecondsPerMillisecond * this.toNumber(args[4]) +
-        this.toNumber(args[5])
-      )
-    } else throw new Error("ARGUMENT ERROR: Invalid argument.")
+          this.microsecondsPerHour * this.toNumber(args[1]) +
+          this.microsecondsPerMinute * this.toNumber(args[2]) +
+          this.microsecondsPerSecond * this.toNumber(args[3]) +
+          this.microsecondsPerMillisecond * this.toNumber(args[4]) +
+          this.toNumber(args[5]),
+      );
+    } else throw new Error('ARGUMENT ERROR: Invalid argument.');
   }
 
   setMicroseconds(microseconds: number) {
@@ -98,7 +98,7 @@ class Duration {
   }
 
   divide(quotient: number): Duration {
-    if (quotient === 0) throw new Error("INTEGERDIVISIONBYZERO: Integer can not be divided by zero.")
+    if (quotient === 0) throw new Error('INTEGERDIVISIONBYZERO: Integer can not be divided by zero.');
     return new Duration(Math.floor(Duration._duration / quotient));
   }
 
@@ -119,7 +119,7 @@ class Duration {
   }
 
   equal(other: Duration): boolean {
-    return Duration._duration === other.inMicroseconds
+    return Duration._duration === other.inMicroseconds;
   }
 
   compareTo(other: Duration): number {
@@ -141,13 +141,13 @@ class Duration {
   private toNumber(value: any): number {
     if (value === undefined) return NaN;
     if (value === null) return 0;
-    if (typeof value === "boolean") {
+    if (typeof value === 'boolean') {
       if (value) return 1;
       else return 0;
     }
-    if (typeof value === "string") return parseInt(value)
-    if (typeof value === "symbol") throw new Error('TYPE ERROR: Unexpected operand type.')
-    if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
+    if (typeof value === 'string') return parseInt(value, 10);
+    if (typeof value === 'symbol') throw new Error('TYPE ERROR: Unexpected operand type.');
+    if (typeof value === 'object') throw new Error('TYPE ERROR: Unexpected operand type.');
     return value;
   }
 
@@ -164,8 +164,6 @@ class Duration {
     if (n >= 10) return `${n}`;
     return `0${n}`;
   }
-
 }
-
 
 export default Duration;

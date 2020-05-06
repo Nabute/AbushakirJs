@@ -90,14 +90,12 @@ describe('Parameterized Constructors (UNIX EPOCH or time stamp)...', () => {
   const someyear: EtDatetime = new EtDatetime(1585731446021);
 
   test('Testing toString() on Parameterized Constructor', () => {
-    expect(someyear.toString()).toBe("2012-07-23 08:57:26.021");
+    expect(someyear.toString()).toBe('2012-07-23 08:57:26.021');
   });
-
 
   test('Testing Year on Parameterized Constructor', () => {
     expect(someyear.year).toBe(2012);
   });
-
 
   test('Testing Month on Parameterized Constructor', () => {
     expect(someyear.month).toBe(7);
@@ -108,7 +106,7 @@ describe('Parameterized Constructors (UNIX EPOCH or time stamp)...', () => {
   });
 
   test('Testing dayGeez on Parameterized Constructor', () => {
-    expect(someyear.dayGeez).toBe("፳፫");
+    expect(someyear.dayGeez).toBe('፳፫');
   });
 
   test('Testing Hour on Parameterized Constructor', () => {
@@ -126,7 +124,6 @@ describe('Parameterized Constructors (UNIX EPOCH or time stamp)...', () => {
   test('Testing Millisecond on Parameterized Constructor', () => {
     expect(someyear.millisecond).toBe(21);
   });
-
 });
 
 describe('Parameterized Constructors (Full argument)...', () => {
@@ -237,15 +234,14 @@ describe('Testing EtDatetime comparision...', () => {
   });
 
   test('Testing EtDatetime method "add"...', () => {
-    expect(now.add(hourDifference).toString()).toMatch("2012-07-25 08:57:26.021");
+    expect(now.add(hourDifference).toString()).toMatch('2012-07-25 08:57:26.021');
   });
 
   test('Testing EtDatetime method "subtract"...', () => {
-    expect(hourLater.subtract(hourDifference).toString()).toMatch("2012-07-23 08:57:26.021");
+    expect(hourLater.subtract(hourDifference).toString()).toMatch('2012-07-23 08:57:26.021');
   });
 
   test('Testing EtDatetime method "difference"...', () => {
     expect(now.difference(hourLater).inDays).toBe(2);
   });
-
 });

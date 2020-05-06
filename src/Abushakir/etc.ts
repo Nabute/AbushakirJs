@@ -13,7 +13,7 @@ export default class ETC implements Calendar {
       this._date = new EtDatetime(this.toNumber(args[0]), this.toNumber(args[1]), 1);
     } else if (args.length === 1) {
       this._date = new EtDatetime(this.toNumber(args[0]), 1, 1);
-    } else throw new Error(`ARGUMENT ERROR: Expected upto 3 arguments, ${args.length} given.`)
+    } else throw new Error(`ARGUMENT ERROR: Expected upto 3 arguments, ${args.length} given.`);
   }
 
   get year(): number {
@@ -63,12 +63,10 @@ export default class ETC implements Calendar {
     return new ETC(this._date.year - 1, this._date.month);
   }
 
-
-
   monthDays(geezDay: boolean = false, weekDayName: boolean = false): any[] {
     let monthBeginning: number = this._monthRange()[0];
     const daysInMonth: number = this._monthRange()[1];
-    let result: any[] = [];
+    const result: any[] = [];
     for (let i = 0; i < daysInMonth; i++) {
       if (geezDay) {
         result.push([
@@ -90,7 +88,7 @@ export default class ETC implements Calendar {
   }
 
   yearDays(geezDay: boolean = false, weekDayName: boolean = false): any[] {
-    let result: any[] = [];
+    const result: any[] = [];
     for (let i = 0; i < constants._months.length; i++) {
       result.push(this._monthDays(this._date.year, i + 1, geezDay, weekDayName));
     }
@@ -111,7 +109,7 @@ export default class ETC implements Calendar {
     const yr = new EtDatetime(year, month);
     let monthBeginning: number = yr.weekday;
     const daysInMonth: number = yr.month === 13 ? (yr.isLeap ? 6 : 5) : 30;
-    let result: any[] = [];
+    const result: any[] = [];
     for (let i = 0; i < daysInMonth; i++) {
       if (geezDay) {
         result.push([
@@ -129,13 +127,13 @@ export default class ETC implements Calendar {
   private toNumber(value: any): number {
     if (value === undefined) return NaN;
     if (value === null) return 0;
-    if (typeof value === "boolean") {
+    if (typeof value === 'boolean') {
       if (value) return 1;
       else return 0;
     }
-    if (typeof value === "string") return parseInt(value)
-    if (typeof value === "symbol") throw new Error('TYPE ERROR: Unexpected operand type.')
-    if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
+    if (typeof value === 'string') return parseInt(value, 10);
+    if (typeof value === 'symbol') throw new Error('TYPE ERROR: Unexpected operand type.');
+    if (typeof value === 'object') throw new Error('TYPE ERROR: Unexpected operand type.');
     return value;
   }
 }

@@ -25,4 +25,3 @@ export default interface Datetime {
   add(duration: Duration): EtDatetime;
   subtract(duration: Duration): EtDatetime;
 }
-

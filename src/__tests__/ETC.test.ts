@@ -1,5 +1,5 @@
-import ETC from "../Abushakir/etc";
-import { constants } from "../utils/constants";
+import ETC from '../Abushakir/etc';
+import { constants } from '../utils/constants';
 
 describe('Testing Ethiopian Calendar for "ጷጉሜን" month...', () => {
   var someYear: ETC = new ETC(2011, 13, 6);
@@ -17,7 +17,7 @@ describe('Testing Ethiopian Calendar for "ጷጉሜን" month...', () => {
   });
 
   test('Testing Month Name...', () => {
-    expect(someYear.monthName).toBe("ጷጉሜን");
+    expect(someYear.monthName).toBe('ጷጉሜን');
   });
 
   test('Testing All Months...', () => {

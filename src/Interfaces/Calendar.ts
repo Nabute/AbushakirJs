@@ -13,5 +13,4 @@ interface Calendar {
   yearDays(): any[];
 }
 
-
 export { Calendar };
