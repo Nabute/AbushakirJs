@@ -5,8 +5,8 @@ import { constants } from '../utils/constants';
 
 class EtDatetime implements Datetime {
   // Fields
-  moment: number;
-  fixed: number;
+  moment!: number;
+  fixed!: number;
 
   // Parameterized Constructor
   // constructor(
@@ -33,11 +33,21 @@ class EtDatetime implements Datetime {
     }
 
     if (args.length === 1) {
-      this.fromMillisecondsSinceEpoch(this.toNumber(args[0]));
+      var value: number = this.toNumber(args[0]);
+      if (value > 9999) {
+        this.fromMillisecondsSinceEpoch(value);
+      } else {
+        this.fixed = this.fixedFromEthiopic(value, 1, 1);
+        this.moment = this.dateToEpoch(value, 1, 1, 0, 0, 0, 0);
+        if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+      }
+    }
+    if (args.length == 0) {
+      this.fixed = this.fixedFromUnix(Date.now()); 
+      this.moment = Date.now();
     }
 
-    this.fixed = this.fixedFromUnix(Date.now());
-    this.moment = Date.now();
+
   }
 
   fromMillisecondsSinceEpoch(millisecondsSinceEpoch: number) {
@@ -76,7 +86,7 @@ class EtDatetime implements Datetime {
     return Math.floor((4 * (this.fixed - constants._ethiopicEpoch) + 1463) / 1461);
   }
   public get month(): number {
-    return Math.floor((this.fixed - this.fixedFromEthiopic(this.year, 1, 1)) / 30 + 1);
+    return (Math.floor((this.fixed - this.fixedFromEthiopic(this.year, 1, 1)) / 30) + 1);
   }
   public get monthGeez(): String {
     return constants._months[(this.month - 1) % 13];

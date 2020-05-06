@@ -144,7 +144,7 @@ class Constants {
     return this._tinteMetkih;
   }
 
-  get _yeeletTewsak(): Array<Object> {
+  get _yeeletTewsak(): Array<tewsak> {
     return this.yeeletTewsak;
   }
 
