@@ -1,5 +1,5 @@
 //
-interface durationNamedParams {
+interface DurationNamedParams {
   days?: number;
   hours?: number;
   minutes?: number;
@@ -41,8 +41,8 @@ export class Duration {
         this.microsecondsPerMillisecond * this.toNumber(args[4]) +
         this.toNumber(args[5])
       )
-    } else if (args.length == 1) {
-      var arg1: number = this.toNumber(args[0]);
+    } else if (args.length === 1) {
+      const arg1: number = this.toNumber(args[0]);
       if (arg1 > this.microsecondsPerDay) this.setMicroseconds(arg1);
       else this.setMicroseconds(this.microsecondsPerDay * arg1)
     } else throw new Error("ARGUMENT ERROR: Invalid argument.")
@@ -102,7 +102,7 @@ export class Duration {
   }
 
   divide(quotient: number): Duration {
-    if (quotient == 0) throw new Error("INTEGERDIVISIONBYZERO: Integer can not be divided by zero.")
+    if (quotient === 0) throw new Error("INTEGERDIVISIONBYZERO: Integer can not be divided by zero.")
     return new Duration(Math.floor(Duration._duration / quotient));
   }
 
@@ -123,7 +123,7 @@ export class Duration {
   }
 
   equal(other: Duration): boolean {
-    return Duration._duration == other.inMicroseconds
+    return Duration._duration === other.inMicroseconds
   }
 
   compareTo(other: Duration): number {
@@ -132,12 +132,12 @@ export class Duration {
     else return 1;
   }
 
-  toString(): String {
+  tostring(): string {
     if (this.isNegative) return `-${this}`;
 
-    var min: String = this.twoDigits(this.inMinutes % this.minutesPerHour);
-    var sec: String = this.twoDigits(this.inSeconds % this.secondsPerMinute);
-    var micSec: String = this.sixDigits(this.inMicroseconds % this.microsecondsPerSecond);
+    const min: string = this.twoDigits(this.inMinutes % this.minutesPerHour);
+    const sec: string = this.twoDigits(this.inSeconds % this.secondsPerMinute);
+    const micSec: string = this.sixDigits(this.inMicroseconds % this.microsecondsPerSecond);
 
     return `${this.inHours}:${min}:${sec}.${micSec}`;
   }
@@ -155,7 +155,7 @@ export class Duration {
     return value;
   }
 
-  private sixDigits(n: number): String {
+  private sixDigits(n: number): string {
     if (n >= 100000) return `${n}`;
     if (n >= 10000) return `0${n}`;
     if (n >= 1000) return `00${n}`;
@@ -164,7 +164,7 @@ export class Duration {
     return `00000${n}`;
   }
 
-  private twoDigits(n: number): String {
+  private twoDigits(n: number): string {
     if (n >= 10) return `${n}`;
     return `0${n}`;
   }

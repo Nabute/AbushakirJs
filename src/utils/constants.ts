@@ -1,5 +1,5 @@
 //
-interface tewsak { name: string, val: number };
+interface Tewsak { name: string, val: number };
 
 class Constants {
   private unixEpoch: number = 719163;
@@ -10,14 +10,14 @@ class Constants {
   private _secMilliSec: number = 1000;
   private _maxMillisecondsSinceEpoch: number = 8640000000000000;
 
-  private _evangelists: Array<string> = ['ዮሐንስ', 'ማቴዎስ', 'ማርቆስ', 'ሉቃስ'];
+  private _evangelists: string[] = ['ዮሐንስ', 'ማቴዎስ', 'ማርቆስ', 'ሉቃስ'];
 
   private _ameteFida: number = 5500;
 
   private _tinteAbekte: number = 11;
   private _tinteMetkih: number = 19;
 
-  private months: Array<string> = [
+  private months: string[] = [
     'መስከረም',
     'ጥቅምት',
     'ኅዳር',
@@ -33,7 +33,7 @@ class Constants {
     'ጷጉሜን',
   ];
 
-  private dayNumbers: Array<string> = [
+  private dayNumbers: string[] = [
     '፩',
     '፪',
     '፫',
@@ -80,7 +80,7 @@ class Constants {
     'ጾመ ድህነት': 121,
   };
 
-  private yeeletTewsak: Array<tewsak> = [
+  private yeeletTewsak: Tewsak[] = [
     { name: 'አርብ', val: 2 },
     { name: 'ሐሙስ', val: 3 },
     { name: 'ረቡዕ', val: 4 },
@@ -90,7 +90,7 @@ class Constants {
     { name: 'ቅዳሜ', val: 8 },
   ];
 
-  private weekdays: Array<string> = ['ሰኞ', 'ማግሰኞ', 'ረቡዕ', 'ሐሙስ', 'አርብ', 'ቅዳሜ', 'እሁድ'];
+  private weekdays: string[] = ['ሰኞ', 'ማግሰኞ', 'ረቡዕ', 'ሐሙስ', 'አርብ', 'ቅዳሜ', 'እሁድ'];
 
   get _unixEpoch(): number {
     return this.unixEpoch;
@@ -100,14 +100,14 @@ class Constants {
     return this.ethiopicEpoch;
   }
 
-  get _months(): Array<string> {
+  get _months(): string[] {
     return this.months;
   }
 
-  get _dayNumbers(): Array<string> {
+  get _dayNumbers(): string[] {
     return this.dayNumbers;
   }
-  get _weekdays(): Array<string> {
+  get _weekdays(): string[] {
     return this.weekdays;
   }
 
@@ -128,7 +128,7 @@ class Constants {
     return this._maxMillisecondsSinceEpoch;
   }
 
-  get evangelists(): Array<string> {
+  get evangelists(): string[] {
     return this._evangelists;
   }
 
@@ -144,7 +144,7 @@ class Constants {
     return this._tinteMetkih;
   }
 
-  get _yeeletTewsak(): Array<tewsak> {
+  get _yeeletTewsak(): Tewsak[] {
     return this.yeeletTewsak;
   }
 
@@ -152,4 +152,4 @@ class Constants {
     return this.yebealTewsak;
   }
 }
-export var constants = new Constants();
+export const constants = new Constants();

@@ -12,14 +12,14 @@ import { EtDatetime, ETC, BahireHasab } from '..';
 /**
  * Ethiopian Datetime Module [EtDatetime]
  */
-var now: EtDatetime = new EtDatetime(); // => 2012-07-28 17:18:31.466
+const now: EtDatetime = new EtDatetime(); // => 2012-07-28 17:18:31.466
 console.log(now.date); // => {year: 2012, month: 7, day: 28}
 console.log(now.time); // => {h: 17, m: 18, s: 31}
 
-var covidFirstConfirmed: EtDatetime = new EtDatetime(2012, 7, 4);
-var covidFirstConfirmedEpoch: EtDatetime = new EtDatetime(covidFirstConfirmed.moment);
+const covidFirstConfirmed: EtDatetime = new EtDatetime(2012, 7, 4);
+const covidFirstConfirmedEpoch: EtDatetime = new EtDatetime(covidFirstConfirmed.moment);
 
-// var covidFirstDeath: EtDatetime = EtDatetime.parse("2012-07-26 23:00:00");
+// let covidFirstDeath: EtDatetime = EtDatetime.parse("2012-07-26 23:00:00");
 
 /// Comparison of two EtDatetime Instances
 // Duration daysWithOutDeath = covidFirstConfirmed.difference(covidFirstDeath);
@@ -35,7 +35,7 @@ console.log(covidFirstConfirmed.isAtSameMomentAs(covidFirstConfirmedEpoch));
 /**
  * Ethiopian Calendar Module [ETC]
  */
-var ethiopianCalendar: ETC = new ETC(2011, 13, 4);
+const ethiopianCalendar: ETC = new ETC(2011, 13, 4);
 
 ///
 console.log(ethiopianCalendar.monthDays(true, true)); // Iterable Object of the given month
@@ -48,8 +48,8 @@ console.log(ethiopianCalendar.prevYear); // => ETC instance of prevYear, same mo
 /**
  * Bahire Hasab Module [BahireHasab]
  */
-var bh: BahireHasab = new BahireHasab(2011);
-//  var bh: BahireHasab = new BahireHasab(); // Get's the current year
+const bh: BahireHasab = new BahireHasab(2011);
+//  let bh: BahireHasab = new BahireHasab(); // Get's the current year
 
 console.log(bh.getEvangelist(true)); // => ሉቃስ
 

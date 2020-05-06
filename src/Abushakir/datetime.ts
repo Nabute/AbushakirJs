@@ -14,20 +14,20 @@ class EtDatetime implements Datetime {
     if (args.length >= 2) {
       this.fixed = this.fixedFromEthiopic(this.toNumber(args[0]), this.toNumber(args[1]), this.toNumber(args[2]));
       this.moment = this.dateToEpoch(this.toNumber(args[0]), this.toNumber(args[1]), this.toNumber(args[2]), this.toNumber(args[3]), this.toNumber(args[4]), this.toNumber(args[5]), this.toNumber(args[6]));
-      if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+      if (this.fixed === null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
     }
 
     if (args.length === 1) {
-      var value: number = this.toNumber(args[0]);
+      const value: number = this.toNumber(args[0]);
       if (value > 9999) {
         this.fromMillisecondsSinceEpoch(value);
       } else {
         this.fixed = this.fixedFromEthiopic(value, 1, 1);
         this.moment = this.dateToEpoch(value, 1, 1, 0, 0, 0, 0);
-        if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+        if (this.fixed === null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
       }
     }
-    if (args.length == 0) {
+    if (args.length === 0) {
       this.fixed = this.fixedFromUnix(Date.now());
       this.moment = Date.now();
     }
@@ -38,7 +38,7 @@ class EtDatetime implements Datetime {
   fromMillisecondsSinceEpoch(millisecondsSinceEpoch: number) {
     this.moment = millisecondsSinceEpoch;
     this.fixed = this.fixedFromUnix(millisecondsSinceEpoch);
-    if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+    if (this.fixed === null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
     if (
       Math.abs(millisecondsSinceEpoch) > constants.maxMillisecondsSinceEpoch ||
       Math.abs(millisecondsSinceEpoch) === constants.maxMillisecondsSinceEpoch
@@ -62,13 +62,13 @@ class EtDatetime implements Datetime {
   public get month(): number {
     return (Math.floor((this.fixed - this.fixedFromEthiopic(this.year, 1, 1)) / 30) + 1);
   }
-  public get monthGeez(): String {
+  public get monthGeez(): string {
     return constants._months[(this.month - 1) % 13];
   }
   public get day(): number {
     return this.fixed + 1 - this.fixedFromEthiopic(this.year, this.month, 1);
   }
-  public get dayGeez(): String {
+  public get dayGeez(): string {
     return constants._dayNumbers[(this.day - 1) % 30];
   }
   public get hour(): number {
@@ -85,7 +85,7 @@ class EtDatetime implements Datetime {
   }
 
   public get isLeap(): boolean {
-    return this.year % 4 == 3;
+    return this.year % 4 === 3;
   }
 
   get yearFirstDay(): number {
@@ -104,19 +104,18 @@ class EtDatetime implements Datetime {
     return { h: this.hour, m: this.minute, s: this.second };
   }
 
-  //Methods
-
-  toString(): String {
-    var y: String = this.fourDigits(this.year);
-    var m: String = this.twoDigits(this.month);
-    var d: String = this.twoDigits(this.day);
-    var h: String = this.twoDigits(this.hour);
-    var min: String = this.twoDigits(this.minute);
-    var sec: String = this.twoDigits(this.second);
-    var ms: String = this.threeDigits(this.millisecond);
+  // Methods
+  toString(): string {
+    const y: string = this.fourDigits(this.year);
+    const m: string = this.twoDigits(this.month);
+    const d: string = this.twoDigits(this.day);
+    const h: string = this.twoDigits(this.hour);
+    const min: string = this.twoDigits(this.minute);
+    const sec: string = this.twoDigits(this.second);
+    const ms: string = this.threeDigits(this.millisecond);
     return `${y}-${m}-${d} ${h}:${min}:${sec}.${ms}`;
   }
-  toJson(): Object {
+  toJson(): object {
     return {
       year: this.fourDigits(this.year),
       month: this.twoDigits(this.month),
@@ -128,14 +127,14 @@ class EtDatetime implements Datetime {
     };
   }
 
-  toIso8601String(): String {
-    var y: String = this.year >= -9999 && this.year <= 9999 ? this.fourDigits(this.year) : this.sixDigits(this.year);
-    var m: String = this.twoDigits(this.month);
-    var d: String = this.twoDigits(this.day);
-    var h: String = this.twoDigits(this.hour);
-    var min: String = this.twoDigits(this.minute);
-    var sec: String = this.twoDigits(this.second);
-    var ms: String = this.threeDigits(this.millisecond);
+  toIso8601String(): string {
+    const y: string = this.year >= -9999 && this.year <= 9999 ? this.fourDigits(this.year) : this.sixDigits(this.year);
+    const m: string = this.twoDigits(this.month);
+    const d: string = this.twoDigits(this.day);
+    const h: string = this.twoDigits(this.hour);
+    const min: string = this.twoDigits(this.minute);
+    const sec: string = this.twoDigits(this.second);
+    const ms: string = this.threeDigits(this.millisecond);
     return `${y}-${m}-${d}T${h}:${min}:${sec}.${ms}`;
   }
 
@@ -148,7 +147,7 @@ class EtDatetime implements Datetime {
   }
 
   isAtSameMomentAs(other: EtDatetime): boolean {
-    return this.fixed == other.fixed && this.moment == other.moment;
+    return this.fixed === other.fixed && this.moment === other.moment;
   }
 
   compareTo(other: EtDatetime): number {
@@ -160,7 +159,7 @@ class EtDatetime implements Datetime {
   add(duration: any): EtDatetime {
     throw new Error('Method not implemented.');
   }
-  
+
   subtract(duration: any): EtDatetime {
     throw new Error('Method not implemented.');
   }
@@ -193,35 +192,35 @@ class EtDatetime implements Datetime {
   }
 
   private _yearFirstDay(): number {
-    var ameteAlem: number = constants.ameteFida + this.year;
-    var rabeet = Math.floor(ameteAlem / 4);
+    const ameteAlem: number = constants.ameteFida + this.year;
+    const rabeet = Math.floor(ameteAlem / 4);
     return (ameteAlem + rabeet) % 7;
   }
 
-  private fourDigits(n: number): String {
-    var absN: number = Math.abs(n);
-    var sign: String = n < 0 ? '-' : '';
+  private fourDigits(n: number): string {
+    const absN: number = Math.abs(n);
+    const sign: string = n < 0 ? '-' : '';
     if (absN >= 1000) return `${n}`;
     if (absN >= 100) return `${sign}0${absN}`;
     if (absN >= 10) return `${sign}00${absN}`;
     return `${sign}000${absN}`;
   }
 
-  private sixDigits(n: number): String {
+  private sixDigits(n: number): string {
     if (n < -9999 || n > 9999) throw new Error('Year out of scope');
-    var absN: number = Math.abs(n);
-    var sign: String = n < 0 ? '-' : '+';
+    const absN: number = Math.abs(n);
+    const sign: string = n < 0 ? '-' : '+';
     if (absN >= 100000) return `${sign}${absN}`;
     return `${sign}0${absN}`;
   }
 
-  private threeDigits(n: number): String {
+  private threeDigits(n: number): string {
     if (n >= 100) return `${n}`;
     if (n >= 10) return `0${n}`;
     return `00${n}`;
   }
 
-  private twoDigits(n: number): String {
+  private twoDigits(n: number): string {
     if (n >= 10) return `${n}`;
     return `0${n}`;
   }

@@ -6,19 +6,18 @@ import { Duration } from '../utils/duration';
 export default interface Datetime {
   year: number;
   month: number;
-  monthGeez: String;
+  monthGeez: string;
   day: number;
-  dayGeez: String;
+  dayGeez: string;
   hour: number;
   minute: number;
   second: number;
   millisecond: number;
 
   // Methods
-  toString(): String;
-  toJson(): Object;
-  toIso8601String(): String;
-  //
+  toString(): string;
+  toJson(): object;
+  toIso8601String(): string;
   isBefore(other: EtDatetime): boolean;
   isAfter(other: EtDatetime): boolean;
   isAtSameMomentAs(other: EtDatetime): boolean;

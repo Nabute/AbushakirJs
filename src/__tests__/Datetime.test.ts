@@ -163,7 +163,7 @@ describe('Parameterized Constructors (Full argument)...', () => {
   });
 
   test('Testing ToString method on Parameterized Constructor', () => {
-    expect(someyear.toString()).toEqual('2012-07-07 15:12:17.500');
+    expect(someyear.toString()).toMatch('2012-07-07 15:12:17.500');
   });
 
   test('Testing ToString method on Parameterized Constructor', () => {
