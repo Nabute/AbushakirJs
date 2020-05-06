@@ -8,8 +8,8 @@ interface DurationNamedParams {
   microseconds?: number;
 }
 
-export class Duration {
-  private microsecondsPerMillisecond: number = 1000;
+class Duration {
+  private microsecondsPerMillisecond: number = 1;
   private millisecondsPerSecond: number = 1000;
   private secondsPerMinute: number = 60;
   private minutesPerHour: number = 60;
@@ -32,7 +32,7 @@ export class Duration {
   static _duration: number;
 
   constructor(...args: any[]) {
-    if (args.length > 1 && args.length < 7) {
+    if (args.length > 0 && args.length < 7) {
       this.setMicroseconds(
         this.microsecondsPerDay * this.toNumber(args[0]) +
         this.microsecondsPerHour * this.toNumber(args[1]) +
@@ -41,15 +41,11 @@ export class Duration {
         this.microsecondsPerMillisecond * this.toNumber(args[4]) +
         this.toNumber(args[5])
       )
-    } else if (args.length === 1) {
-      const arg1: number = this.toNumber(args[0]);
-      if (arg1 > this.microsecondsPerDay) this.setMicroseconds(arg1);
-      else this.setMicroseconds(this.microsecondsPerDay * arg1)
     } else throw new Error("ARGUMENT ERROR: Invalid argument.")
   }
 
   setMicroseconds(microseconds: number) {
-    Duration._duration = microseconds;
+    Duration._duration = Math.floor(microseconds);
   }
 
   get millisecondDuration(): number {
@@ -170,3 +166,6 @@ export class Duration {
   }
 
 }
+
+
+export default Duration;

@@ -1,7 +1,7 @@
 //
 
 import EtDatetime from '../Abushakir/datetime';
-import { Duration } from '../utils/duration';
+import Duration from '../utils/duration';
 
 export default interface Datetime {
   year: number;

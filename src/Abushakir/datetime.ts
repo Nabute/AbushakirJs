@@ -1,7 +1,7 @@
 //
 import Datetime from '../Interfaces/EDT';
 import { constants } from '../utils/constants';
-import { Duration } from '../utils/duration';
+import Duration from '../utils/duration';
 
 
 class EtDatetime implements Datetime {
@@ -46,40 +46,44 @@ class EtDatetime implements Datetime {
       throw new Error(`Calendar out side valid range ${constants.maxMillisecondsSinceEpoch}`);
   }
 
-
-
   now() {
     this.fixed = this.fixedFromUnix(Date.now());
     this.moment = Date.now();
   }
 
-
-
   // Getters
   public get year(): number {
     return Math.floor((4 * (this.fixed - constants._ethiopicEpoch) + 1463) / 1461);
   }
+
   public get month(): number {
     return (Math.floor((this.fixed - this.fixedFromEthiopic(this.year, 1, 1)) / 30) + 1);
   }
+
   public get monthGeez(): string {
     return constants._months[(this.month - 1) % 13];
   }
+
   public get day(): number {
     return this.fixed + 1 - this.fixedFromEthiopic(this.year, this.month, 1);
   }
+
   public get dayGeez(): string {
     return constants._dayNumbers[(this.day - 1) % 30];
   }
+
   public get hour(): number {
     return Math.floor(this.moment / constants.hourMilliSec) % 24;
   }
+
   public get minute(): number {
     return Math.floor(this.moment / constants.minMilliSec) % 60;
   }
+
   public get second(): number {
     return Math.floor((this.moment / constants.secMilliSec) % 60);
   }
+
   public get millisecond(): number {
     return this.moment % 1000;
   }
@@ -139,11 +143,11 @@ class EtDatetime implements Datetime {
   }
 
   isBefore(other: EtDatetime): boolean {
-    return this.fixed < other.fixed && this.moment < other.moment;
+    return this.fixed < other.fixed || this.moment < other.moment;
   }
 
   isAfter(other: EtDatetime): boolean {
-    return this.fixed > other.fixed && this.moment > other.moment;
+    return this.fixed > other.fixed || this.moment > other.moment;
   }
 
   isAtSameMomentAs(other: EtDatetime): boolean {
@@ -165,7 +169,7 @@ class EtDatetime implements Datetime {
   }
 
   difference(other: EtDatetime): Duration {
-    return new Duration(Math.floor(this.fixed - other.fixed));
+    return new Duration(Math.abs((this.fixed - other.fixed)), 0, 0, 0, 0, 0);
   }
 
   // Private methods

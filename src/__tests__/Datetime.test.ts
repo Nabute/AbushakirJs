@@ -1,7 +1,8 @@
 import EtDatetime from '../Abushakir/datetime';
+import Duration from '../utils/duration';
 
 describe('Testing EtDatetime with Parameterized Constructor...', () => {
-  var someDate: EtDatetime = new EtDatetime(2012, 7, 7);
+  const someDate: EtDatetime = new EtDatetime(2012, 7, 7);
 
   test('Testing Year on Parameterized Constructor', () => {
     expect(someDate.year).toBe(2012);
@@ -21,7 +22,7 @@ describe('Testing EtDatetime with Parameterized Constructor...', () => {
 });
 
 describe('Parameterized Constructors (year only)...', () => {
-  var someyear: EtDatetime = new EtDatetime(2010);
+  const someyear: EtDatetime = new EtDatetime(2010);
 
   test('Testing Year on Parameterized Constructor', () => {
     expect(someyear.year).toBe(2010);
@@ -37,8 +38,8 @@ describe('Parameterized Constructors (year only)...', () => {
 });
 
 describe('Parameterized Constructors (NOW or the current time stamp)...', () => {
-  var someyear: EtDatetime = new EtDatetime();
-  var currentStamp: EtDatetime = new EtDatetime(Date.now());
+  const someyear: EtDatetime = new EtDatetime();
+  const currentStamp: EtDatetime = new EtDatetime(Date.now());
 
   test('Testing Year on Parameterized Constructor', () => {
     expect(someyear.year).toBe(currentStamp.year);
@@ -85,10 +86,8 @@ describe('Parameterized Constructors (NOW or the current time stamp)...', () => 
   });
 });
 
-
-
 describe('Parameterized Constructors (UNIX EPOCH or time stamp)...', () => {
-  var someyear: EtDatetime = new EtDatetime(1585731446021);
+  const someyear: EtDatetime = new EtDatetime(1585731446021);
 
   test('Testing toString() on Parameterized Constructor', () => {
     expect(someyear.toString()).toBe("2012-07-23 08:57:26.021");
@@ -130,9 +129,8 @@ describe('Parameterized Constructors (UNIX EPOCH or time stamp)...', () => {
 
 });
 
-
 describe('Parameterized Constructors (Full argument)...', () => {
-  var someyear: EtDatetime = new EtDatetime(2012, 7, 7, 15, 12, 17, 500);
+  const someyear: EtDatetime = new EtDatetime(2012, 7, 7, 15, 12, 17, 500);
 
   test('Testing Year on Parameterized Constructor', () => {
     expect(someyear.year).toBe(2012);
@@ -184,9 +182,9 @@ describe('Parameterized Constructors (Full argument)...', () => {
 });
 
 describe('Comparing two DateTime INSTANTS...', () => {
-  var sometime: EtDatetime = new EtDatetime(2012, 7, 7, 15, 12, 17, 500);
-  var beforeSometime: EtDatetime = new EtDatetime(2012, 6, 7, 15, 12, 17, 500);
-  var equalToSometime: EtDatetime = new EtDatetime(2012, 7, 7, 15, 12, 17, 500);
+  const sometime: EtDatetime = new EtDatetime(2012, 7, 7, 15, 12, 17, 500);
+  const beforeSometime: EtDatetime = new EtDatetime(2012, 6, 7, 15, 12, 17, 500);
+  const equalToSometime: EtDatetime = new EtDatetime(2012, 7, 7, 15, 12, 17, 500);
 
   test('Testing Is After on Parameterized Constructor', () => {
     expect(sometime.isAfter(beforeSometime)).toBe(true);
@@ -211,4 +209,43 @@ describe('Comparing two DateTime INSTANTS...', () => {
   test('Testing Day on Parameterized Constructor', () => {
     expect(beforeSometime.isAtSameMomentAs(equalToSometime)).toBe(false);
   });
+});
+
+describe('Testing EtDatetime comparision...', () => {
+  const now: EtDatetime = new EtDatetime(2012, 7, 23, 8, 57, 26, 21);
+  const hourLater: EtDatetime = new EtDatetime(2012, 7, 25, 8, 57, 26, 21);
+  const hourDifference: Duration = new Duration(2, 0, 0, 0, 0, 0); // 2 days difference
+
+  test('Testing EtDatetime method "IsBefore"...', () => {
+    expect(now.isBefore(hourLater)).toBe(true);
+  });
+
+  test('Testing EtDatetime method "isAfter"...', () => {
+    expect(hourLater.isAfter(now)).toBe(true);
+  });
+
+  test('Testing EtDatetime method "isAtSameMomentAs"...', () => {
+    expect(hourLater.isAtSameMomentAs(now)).toBe(false);
+  });
+
+  test('Testing EtDatetime method "compareTo"...', () => {
+    expect(hourLater.compareTo(hourLater)).toBe(0);
+  });
+
+  test('Testing EtDatetime method "compareTo"...', () => {
+    expect(hourLater.compareTo(now)).toBe(1);
+  });
+
+  test('Testing EtDatetime method "add"...', () => {
+    expect(now.add(hourDifference).toString()).toMatch("2012-07-25 08:57:26.021");
+  });
+
+  test('Testing EtDatetime method "subtract"...', () => {
+    expect(hourLater.subtract(hourDifference).toString()).toMatch("2012-07-23 08:57:26.021");
+  });
+
+  test('Testing EtDatetime method "difference"...', () => {
+    expect(now.difference(hourLater).inDays).toBe(2);
+  });
+
 });
