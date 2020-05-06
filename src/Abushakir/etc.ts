@@ -7,8 +7,13 @@ export default class ETC implements Calendar {
   private _date: EtDatetime;
 
   constructor(...args: any[]) {
-    this._date = new EtDatetime(args[0], args[1], args[2]);
-    // handle argument errors ( maximum of 3 arguments)
+    if (args.length == 3) {
+      this._date = new EtDatetime(this.toNumber(args[0]), this.toNumber(args[1]), this.toNumber(args[2]));
+    } else if (args.length == 2) {
+      this._date = new EtDatetime(this.toNumber(args[0]), this.toNumber(args[1]), 1);
+    } else if (args.length == 1) {
+      this._date = new EtDatetime(this.toNumber(args[0]), 1, 1);
+    } else throw new Error(`ARGUMENT ERROR: Expected upto 3 arguments, ${args.length} given.`)
   }
 
   get year(): number {
@@ -58,30 +63,7 @@ export default class ETC implements Calendar {
     return new ETC(this._date.year - 1, this._date.month);
   }
 
-  private _monthRange(): Array<number> {
-    if (this._date.month <= 1 && this._date.month >= 13)
-      throw new Error('MONTHNUMBER ERROR: Month number should be between 1 and 13.');
-    return [this._date.weekday, this._date.month == 13 ? (this._date.isLeap ? 6 : 5) : 30];
-  }
 
-  private _monthDays(year: number, month: number, geezDay: boolean, weekDayName: boolean): Array<any> {
-    var yr = new EtDatetime(year, month);
-    var monthBeginning: number = yr.weekday;
-    var daysInMonth: number = yr.month == 13 ? (yr.isLeap ? 6 : 5) : 30;
-    var result: Array<any> = [];
-    for (var i = 0; i < daysInMonth; i++) {
-      if (geezDay) {
-        result.push([
-          year,
-          month,
-          constants._dayNumbers[i],
-          weekDayName ? constants._weekdays[monthBeginning] : monthBeginning,
-        ]);
-      } else result.push([year, month, i + 1, weekDayName ? constants._weekdays[monthBeginning] : monthBeginning]);
-      monthBeginning = (monthBeginning + 1) % 7;
-    }
-    return result;
-  }
 
   monthDays(geezDay: boolean = false, weekDayName: boolean = false): Array<any> {
     var monthBeginning: number = this._monthRange()[0];
@@ -117,5 +99,43 @@ export default class ETC implements Calendar {
 
   today() {
     this._date = new EtDatetime(Date.now());
+  }
+
+  private _monthRange(): Array<number> {
+    if (this._date.month <= 1 && this._date.month >= 13)
+      throw new Error('MONTHNUMBER ERROR: Month number should be between 1 and 13.');
+    return [this._date.weekday, this._date.month == 13 ? (this._date.isLeap ? 6 : 5) : 30];
+  }
+
+  private _monthDays(year: number, month: number, geezDay: boolean, weekDayName: boolean): Array<any> {
+    var yr = new EtDatetime(year, month);
+    var monthBeginning: number = yr.weekday;
+    var daysInMonth: number = yr.month == 13 ? (yr.isLeap ? 6 : 5) : 30;
+    var result: Array<any> = [];
+    for (var i = 0; i < daysInMonth; i++) {
+      if (geezDay) {
+        result.push([
+          year,
+          month,
+          constants._dayNumbers[i],
+          weekDayName ? constants._weekdays[monthBeginning] : monthBeginning,
+        ]);
+      } else result.push([year, month, i + 1, weekDayName ? constants._weekdays[monthBeginning] : monthBeginning]);
+      monthBeginning = (monthBeginning + 1) % 7;
+    }
+    return result;
+  }
+
+  private toNumber(value: any): number {
+    if (value === undefined) return NaN;
+    if (value === null) return 0;
+    if (typeof value === "boolean") {
+      if (value) return 1;
+      else return 0;
+    }
+    if (typeof value === "string") return parseInt(value)
+    if (typeof value === "symbol") throw new Error('TYPE ERROR: Unexpected operand type.')
+    if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
+    return value;
   }
 }

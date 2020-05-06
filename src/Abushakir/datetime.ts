@@ -3,27 +3,11 @@ import Datetime from '../Interfaces/EDT';
 import { constants } from '../utils/constants';
 // import { Duration } from '../utils/duration';
 
+
 class EtDatetime implements Datetime {
   // Fields
   moment!: number;
   fixed!: number;
-
-  // Parameterized Constructor
-  // constructor(
-  //   year: number,
-  //   month: number = 1,
-  //   day: number = 1,
-  //   hour: number = 0,
-  //   minute: number = 0,
-  //   second: number = 0,
-  //   millisecond: number = 0,
-  //   microsecond: number = 0,
-  // ) {
-  //   this.fixed = this.fixedFromEthiopic(year, month, day);
-  //   this.moment = this.dateToEpoch(year, month, day, hour, minute, second, millisecond);
-
-  //   if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
-  // }
 
   constructor(...args: any[]) {
     if (args.length >= 2) {
@@ -43,7 +27,7 @@ class EtDatetime implements Datetime {
       }
     }
     if (args.length == 0) {
-      this.fixed = this.fixedFromUnix(Date.now()); 
+      this.fixed = this.fixedFromUnix(Date.now());
       this.moment = Date.now();
     }
 
@@ -61,25 +45,14 @@ class EtDatetime implements Datetime {
       throw new Error(`Calendar out side valid range ${constants.maxMillisecondsSinceEpoch}`);
   }
 
-  private toNumber(value: any): number {
-    if (value === undefined) return NaN;
-    if (value === null) return 0;
-    if (typeof value === "boolean") {
-      if (value) return 1;
-      else return 0;
-    }
-    if (typeof value === "string") return parseInt(value)
-    if (typeof value === "symbol") throw new Error('TYPE ERROR: Unexpected operand type.')
-    if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
-    return value;
-  }
-
 
 
   now() {
     this.fixed = this.fixedFromUnix(Date.now());
     this.moment = Date.now();
   }
+
+
 
   // Getters
   public get year(): number {
@@ -243,6 +216,19 @@ class EtDatetime implements Datetime {
   private twoDigits(n: number): String {
     if (n >= 10) return `${n}`;
     return `0${n}`;
+  }
+
+  private toNumber(value: any): number {
+    if (value === undefined) return NaN;
+    if (value === null) return 0;
+    if (typeof value === "boolean") {
+      if (value) return 1;
+      else return 0;
+    }
+    if (typeof value === "string") return parseInt(value)
+    if (typeof value === "symbol") throw new Error('TYPE ERROR: Unexpected operand type.')
+    if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
+    return value;
   }
 
   // private _parseFormat: RegExp = RegExp(r'^([+-]?\d{4,6})-?(\d\d)-?(\d\d)' // Day part.
