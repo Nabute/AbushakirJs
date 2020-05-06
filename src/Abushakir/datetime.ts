@@ -19,7 +19,7 @@ class EtDatetime implements Datetime {
 
     if (args.length === 1) {
       const value: number = this.toNumber(args[0]);
-      if (value > 9999) {
+      if (Math.abs(value) > 9999) {
         this.fromMillisecondsSinceEpoch(value);
       } else {
         this.fixed = this.fixedFromEthiopic(value, 1, 1);
@@ -156,12 +156,16 @@ class EtDatetime implements Datetime {
     else return 1;
   }
 
-  add(duration: any): EtDatetime {
-    throw new Error('Method not implemented.');
+  add(duration: Duration): EtDatetime {
+    return new EtDatetime(this.moment + duration.inMilliseconds)
   }
 
-  subtract(duration: any): EtDatetime {
-    throw new Error('Method not implemented.');
+  subtract(duration: Duration): EtDatetime {
+    return new EtDatetime(this.moment - duration.inMilliseconds)
+  }
+
+  difference(other: EtDatetime): Duration {
+    return new Duration(Math.floor(this.fixed - other.fixed));
   }
 
   // Private methods
@@ -237,10 +241,6 @@ class EtDatetime implements Datetime {
     if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
     return value;
   }
-
-  // private _parseFormat: RegExp = RegExp(r'^([+-]?\d{4,6})-?(\d\d)-?(\d\d)' // Day part.
-  //       r'(?:[ T](\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d+))?)?)?$' // Time part.
-  //       r'( ?[zZ]| ?([-+])(\d\d)(?::?(\d\d))?)?)?$');
 }
 
 export default EtDatetime;
