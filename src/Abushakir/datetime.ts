@@ -1,13 +1,14 @@
 //
 import Datetime from '../Interfaces/EDT';
 import { constants } from '../utils/constants';
-// import { Duration } from '../utils/duration';
+import { Duration } from '../utils/duration';
 
 
 class EtDatetime implements Datetime {
   // Fields
   moment!: number;
   fixed!: number;
+
 
   constructor(...args: any[]) {
     if (args.length >= 2) {
@@ -126,6 +127,7 @@ class EtDatetime implements Datetime {
       ms: this.threeDigits(this.millisecond),
     };
   }
+
   toIso8601String(): String {
     var y: String = this.year >= -9999 && this.year <= 9999 ? this.fourDigits(this.year) : this.sixDigits(this.year);
     var m: String = this.twoDigits(this.month);
@@ -136,23 +138,29 @@ class EtDatetime implements Datetime {
     var ms: String = this.threeDigits(this.millisecond);
     return `${y}-${m}-${d}T${h}:${min}:${sec}.${ms}`;
   }
+
   isBefore(other: EtDatetime): boolean {
     return this.fixed < other.fixed && this.moment < other.moment;
   }
+
   isAfter(other: EtDatetime): boolean {
     return this.fixed > other.fixed && this.moment > other.moment;
   }
+
   isAtSameMomentAs(other: EtDatetime): boolean {
     return this.fixed == other.fixed && this.moment == other.moment;
   }
+
   compareTo(other: EtDatetime): number {
     if (this.isBefore(other)) return -1;
     else if (this.isAtSameMomentAs(other)) return 0;
     else return 1;
   }
+
   add(duration: any): EtDatetime {
     throw new Error('Method not implemented.');
   }
+  
   subtract(duration: any): EtDatetime {
     throw new Error('Method not implemented.');
   }

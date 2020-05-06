@@ -3,7 +3,7 @@
 import EtDatetime from "./datetime";
 import { constants } from "../utils/constants";
 
-interface tewsak { name: string, val: number };
+interface Tewsak { name: string, val: number };
 
 export default class BahireHasab {
   private _year: number;
@@ -17,7 +17,7 @@ export default class BahireHasab {
   }
 
   getEvangelist(returnName: boolean = false): string {
-    var evangelist: number;
+    let evangelist: number;
     evangelist = this.ameteAlem % 4;
     if (returnName) {
       return constants.evangelists[evangelist];
@@ -26,8 +26,8 @@ export default class BahireHasab {
   }
 
   getMeskeremOne(returnName: boolean = false) {
-    var rabeet: number = Math.floor(this.ameteAlem / 4);
-    var result: number = (this.ameteAlem + rabeet) % 7;
+    const rabeet: number = Math.floor(this.ameteAlem / 4);
+    const result: number = (this.ameteAlem + rabeet) % 7;
     if (returnName) return constants._weekdays[result];
     return result.toString();
   }
@@ -41,7 +41,7 @@ export default class BahireHasab {
   }
 
   get metkih(): number {
-    return this.wenber == 0 ? 30 : (this.wenber * constants.tinteMetkih) % 30;
+    return this.wenber === 0 ? 30 : (this.wenber * constants.tinteMetkih) % 30;
   }
 
   yebealeMetkihWer(): number {
@@ -52,27 +52,27 @@ export default class BahireHasab {
   }
 
   get nenewe(): { month: string, date: number } {
-    var meskerem1 = this.getMeskeremOne(true);
-    var month = this.yebealeMetkihWer();
-    var date;
-    var dayTewsak: number = 0;
+    const meskerem1 = this.getMeskeremOne(true);
+    const month = this.yebealeMetkihWer();
+    let date;
+    let dayTewsak: number = 0;
 
     for (let index = 0; index < constants._yeeletTewsak.length; index++) {
-      const el: any = constants._yeeletTewsak[index];
-      if (el.name == constants._weekdays[(constants._weekdays.indexOf(meskerem1) + this.metkih - 1) % 7]) dayTewsak = el.val
+      let el: any = constants._yeeletTewsak[index];
+      if (el.name === constants._weekdays[(constants._weekdays.indexOf(meskerem1) + this.metkih - 1) % 7]) dayTewsak = el.val
 
     }
 
-    var monthName: string = dayTewsak + this.metkih > 30 ? 'የካቲት' : 'ጥር';
-    if (month == 2) {
+    let monthName: string = dayTewsak + this.metkih > 30 ? 'የካቲት' : 'ጥር';
+    if (month === 2) {
       // ጥቅምት
       monthName = 'የካቲት';
-      var tikimt1: string = constants._weekdays[(constants._weekdays.indexOf(meskerem1) + 2) % 7];
-      var metkihElet: string = constants._weekdays[(constants._weekdays.indexOf(tikimt1) + this.metkih - 1) % 7];
+      const tikimt1: string = constants._weekdays[(constants._weekdays.indexOf(meskerem1) + 2) % 7];
+      const metkihElet: string = constants._weekdays[(constants._weekdays.indexOf(tikimt1) + this.metkih - 1) % 7];
 
       for (let index = 0; index < constants._yeeletTewsak.length; index++) {
         let el: { name: string, val: number } = constants._yeeletTewsak[index];
-        if (el.name == constants._weekdays[constants._weekdays.indexOf(metkihElet)])
+        if (el.name === constants._weekdays[constants._weekdays.indexOf(metkihElet)])
           dayTewsak = el.val
       }
     }
@@ -81,12 +81,12 @@ export default class BahireHasab {
   }
 
 
-  get allAtswamat(): Array<{ beal: string, day: Object }> {
-    var mebajaHamer: { month: string, date: number } = this.nenewe;
-    var result: Array<any> = [];
+  get allAtswamat(): { beal: string, day: object }[] {
+    const mebajaHamer: { month: string, date: number } = this.nenewe;
+    let result: any[] = [];
 
     Object.keys(constants._yebealTewsak).forEach(key => {
-      result.push({ "beal": key, "day": { "month": constants._months[constants._months.indexOf(mebajaHamer.month) + Math.floor((mebajaHamer['date'] + constants._yebealTewsak[key]) / 30)], "date": (mebajaHamer['date'] + constants._yebealTewsak[key]) % 30 == 0 ? 30 : (mebajaHamer['date'] + constants._yebealTewsak[key]) % 30 } });
+      result.push({ "beal": key, "day": { "month": constants._months[constants._months.indexOf(mebajaHamer.month) + Math.floor((mebajaHamer.date + constants._yebealTewsak[key]) / 30)], "date": (mebajaHamer.date + constants._yebealTewsak[key]) % 30 === 0 ? 30 : (mebajaHamer.date + constants._yebealTewsak[key]) % 30 } });
     });
     return result;
   }
@@ -96,18 +96,18 @@ export default class BahireHasab {
     if (constants._yebealTewsak.hasOwnProperty(holidayName)) {
       return true;
     } else
-      throw new Error("FEASTNAME ERROR: Holiday is not a movable one. Please provide holidays between 'ነነዌ' and ጾመ 'ድህነት'");
+      throw new Error("FEASTNAME ERROR: Holiday or Feast is not a movable one. Please provide holidays between 'ነነዌ' and ጾመ 'ድህነት'");
   }
 
 
   getSingleBealOrTsom(name: string) {
-    var status: boolean = this.isMovableHoliday(name);
+    const status: boolean = this.isMovableHoliday(name);
     if (status) {
-      var mebajaHamer: { month: string, date: number } = this.nenewe;
-      var target: number = constants._yebealTewsak[name];
-      var a = {
-        "month": constants._months[constants._months.indexOf(mebajaHamer.month) + Math.floor((mebajaHamer['date'] + target) / 30)],
-        "date": (mebajaHamer['date'] + target) % 30 == 0 ? 30 : (mebajaHamer['date'] + target) % 30
+      const mebajaHamer: { month: string, date: number } = this.nenewe;
+      const target: number = constants._yebealTewsak[name];
+      const a = {
+        "month": constants._months[constants._months.indexOf(mebajaHamer.month) + Math.floor((mebajaHamer.date + target) / 30)],
+        "date": (mebajaHamer.date + target) % 30 === 0 ? 30 : (mebajaHamer.date + target) % 30
       };
       return a;
     }

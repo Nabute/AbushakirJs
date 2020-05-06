@@ -31,41 +31,21 @@ export class Duration {
 
   static _duration: number;
 
-  // var zero: Duration = new Duration(seconds: 0);
-
-  constructor({ days, hours, minutes, seconds, milliseconds, microseconds }: durationNamedParams) {
-    if (
-      days !== undefined &&
-      hours !== undefined &&
-      minutes !== undefined &&
-      seconds !== undefined &&
-      milliseconds !== undefined &&
-      microseconds !== undefined
-    )
-      throw new Error('ARGUMENT ERROR: One of the params must be provided.');
-
-    var temp: number = 0;
-
-    if (days !== undefined) {
-      temp += Math.abs(this.microsecondsPerDay * days);
-    }
-    if (hours !== undefined) {
-      temp += Math.abs(this.microsecondsPerHour * hours);
-    }
-    if (minutes !== undefined) {
-      temp += Math.abs(this.microsecondsPerMinute * minutes);
-    }
-    if (seconds !== undefined) {
-      temp += Math.abs(this.microsecondsPerSecond * seconds);
-    }
-    if (milliseconds !== undefined) {
-      temp += Math.abs(this.microsecondsPerMillisecond * milliseconds);
-    }
-    if (microseconds !== undefined) {
-      temp += Math.abs(microseconds);
-    }
-
-    this.setMicroseconds(temp);
+  constructor(...args: any[]) {
+    if (args.length > 1 && args.length < 7) {
+      this.setMicroseconds(
+        this.microsecondsPerDay * this.toNumber(args[0]) +
+        this.microsecondsPerHour * this.toNumber(args[1]) +
+        this.microsecondsPerMinute * this.toNumber(args[2]) +
+        this.microsecondsPerSecond * this.toNumber(args[3]) +
+        this.microsecondsPerMillisecond * this.toNumber(args[4]) +
+        this.toNumber(args[5])
+      )
+    } else if (args.length == 1) {
+      var arg1: number = this.toNumber(args[0]);
+      if (arg1 > this.microsecondsPerDay) this.setMicroseconds(arg1);
+      else this.setMicroseconds(this.microsecondsPerDay * arg1)
+    } else throw new Error("ARGUMENT ERROR: Invalid argument.")
   }
 
   setMicroseconds(microseconds: number) {
@@ -75,9 +55,6 @@ export class Duration {
   get millisecondDuration(): number {
     return Duration._duration;
   }
-
-  //
-  // }
 
   public get inDays(): number {
     return Math.abs(Duration._duration / this.microsecondsPerDay);
@@ -90,18 +67,106 @@ export class Duration {
   public get inMinutes(): number {
     return Math.abs(Duration._duration / this.microsecondsPerMinute);
   }
+
   public get inSeconds(): number {
     return Math.abs(Duration._duration / this.microsecondsPerSecond);
   }
+
   public get inMilliseconds(): number {
     return Math.abs(Duration._duration / this.microsecondsPerMillisecond);
   }
+
   public get inMicroseconds(): number {
     return Duration._duration;
   }
 
+  public get isNegative(): boolean {
+    return Duration._duration < 0;
+  }
+
   // operations
-  // add(other: Duration): Duration {
-  //     return Duration.setMicroseconds = Duration._duration + other.millisecondDuration;
-  // }
+  abs(): Duration {
+    return new Duration(Math.abs(Duration._duration));
+  }
+
+  add(other: Duration): Duration {
+    return new Duration(Duration._duration + other.millisecondDuration);
+  }
+
+  subtract(other: Duration): Duration {
+    return new Duration(Duration._duration - other.millisecondDuration);
+  }
+
+  multiply(factor: number): Duration {
+    return new Duration(Math.round(Duration._duration * factor));
+  }
+
+  divide(quotient: number): Duration {
+    if (quotient == 0) throw new Error("INTEGERDIVISIONBYZERO: Integer can not be divided by zero.")
+    return new Duration(Math.floor(Duration._duration / quotient));
+  }
+
+  gt(other: Duration): boolean {
+    return Duration._duration > other.millisecondDuration;
+  }
+
+  gte(other: Duration): boolean {
+    return Duration._duration >= other.millisecondDuration;
+  }
+
+  lt(other: Duration): boolean {
+    return Duration._duration < other.millisecondDuration;
+  }
+
+  lte(other: Duration): boolean {
+    return Duration._duration <= other.millisecondDuration;
+  }
+
+  equal(other: Duration): boolean {
+    return Duration._duration == other.inMicroseconds
+  }
+
+  compareTo(other: Duration): number {
+    if (this.lt(other)) return -1;
+    else if (this.equal(other)) return 0;
+    else return 1;
+  }
+
+  toString(): String {
+    if (this.isNegative) return `-${this}`;
+
+    var min: String = this.twoDigits(this.inMinutes % this.minutesPerHour);
+    var sec: String = this.twoDigits(this.inSeconds % this.secondsPerMinute);
+    var micSec: String = this.sixDigits(this.inMicroseconds % this.microsecondsPerSecond);
+
+    return `${this.inHours}:${min}:${sec}.${micSec}`;
+  }
+
+  private toNumber(value: any): number {
+    if (value === undefined) return NaN;
+    if (value === null) return 0;
+    if (typeof value === "boolean") {
+      if (value) return 1;
+      else return 0;
+    }
+    if (typeof value === "string") return parseInt(value)
+    if (typeof value === "symbol") throw new Error('TYPE ERROR: Unexpected operand type.')
+    if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
+    return value;
+  }
+
+  private sixDigits(n: number): String {
+    if (n >= 100000) return `${n}`;
+    if (n >= 10000) return `0${n}`;
+    if (n >= 1000) return `00${n}`;
+    if (n >= 100) return `000${n}`;
+    if (n >= 10) return `0000${n}`;
+    return `00000${n}`;
+  }
+
+  private twoDigits(n: number): String {
+    if (n >= 10) return `${n}`;
+    return `0${n}`;
+  }
+
 }
