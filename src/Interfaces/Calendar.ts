@@ -12,8 +12,5 @@ interface Calendar {
   yearDays(): Array<any>;
 }
 
-interface BH {
-  //
-}
 
-export { Calendar, BH };
+export { Calendar };

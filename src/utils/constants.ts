@@ -65,28 +65,28 @@ class Constants {
     '፴',
   ];
 
-  private yebealTewsak = {
-    ነነዌ: 0,
+  private yebealTewsak: Object = {
+    "ነነዌ": 0,
     'ዓቢይ ጾም': 14,
     'ደብረ ዘይት': 41,
-    ሆሣዕና: 62,
-    ስቅለት: 67,
-    ትንሳኤ: 69,
+    "ሆሣዕና": 62,
+    "ስቅለት": 67,
+    "ትንሳኤ": 69,
     'ርክበ ካህናት': 93,
-    ዕርገት: 108,
-    ጰራቅሊጦስ: 118,
+    "ዕርገት": 108,
+    "ጰራቅሊጦስ": 118,
     'ጾመ ሐዋርያት': 119,
     'ጾመ ድህነት': 121,
   };
 
-  private yeeletTewsak: Array<object> = [
-    { key: 'አርብ', value: 2 },
-    { key: 'ሐሙስ', value: 3 },
-    { key: 'ረቡዕ', value: 4 },
-    { key: 'ማግሰኞ', value: 5 },
-    { key: 'ሰኞ', value: 6 },
-    { key: 'እሁድ', value: 7 },
-    { key: 'ቅዳሜ', value: 8 },
+  private yeeletTewsak: Array<{ name: String, val: number }> = [
+    { name: 'አርብ', val: 2 },
+    { name: 'ሐሙስ', val: 3 },
+    { name: 'ረቡዕ', val: 4 },
+    { name: 'ማግሰኞ', val: 5 },
+    { name: 'ሰኞ', val: 6 },
+    { name: 'እሁድ', val: 7 },
+    { name: 'ቅዳሜ', val: 8 },
   ];
 
   private weekdays: Array<String> = ['ሰኞ', 'ማግሰኞ', 'ረቡዕ', 'ሐሙስ', 'አርብ', 'ቅዳሜ', 'እሁድ'];
@@ -141,6 +141,14 @@ class Constants {
 
   get tinteMetkih(): number {
     return this._tinteMetkih;
+  }
+
+  get _yeeletTewsak(): Array<Object> {
+    return this.yeeletTewsak;
+  }
+
+  get _yebealTewsak(): Object {
+    return this.yebealTewsak;
   }
 }
 export var constants = new Constants();
