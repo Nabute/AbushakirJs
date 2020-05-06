@@ -1,4 +1,5 @@
 //
+interface tewsak { name: string, val: number };
 
 class Constants {
   private unixEpoch: number = 719163;
@@ -9,14 +10,14 @@ class Constants {
   private _secMilliSec: number = 1000;
   private _maxMillisecondsSinceEpoch: number = 8640000000000000;
 
-  private _evangelists: Array<String> = ['ዮሐንስ', 'ማቴዎስ', 'ማርቆስ', 'ሉቃስ'];
+  private _evangelists: Array<string> = ['ዮሐንስ', 'ማቴዎስ', 'ማርቆስ', 'ሉቃስ'];
 
   private _ameteFida: number = 5500;
 
   private _tinteAbekte: number = 11;
   private _tinteMetkih: number = 19;
 
-  private months: Array<String> = [
+  private months: Array<string> = [
     'መስከረም',
     'ጥቅምት',
     'ኅዳር',
@@ -32,7 +33,7 @@ class Constants {
     'ጷጉሜን',
   ];
 
-  private dayNumbers: Array<String> = [
+  private dayNumbers: Array<string> = [
     '፩',
     '፪',
     '፫',
@@ -65,7 +66,7 @@ class Constants {
     '፴',
   ];
 
-  private yebealTewsak: Object = {
+  private yebealTewsak: { [index: string]: number } = {
     "ነነዌ": 0,
     'ዓቢይ ጾም': 14,
     'ደብረ ዘይት': 41,
@@ -79,7 +80,7 @@ class Constants {
     'ጾመ ድህነት': 121,
   };
 
-  private yeeletTewsak: Array<{ name: String, val: number }> = [
+  private yeeletTewsak: Array<tewsak> = [
     { name: 'አርብ', val: 2 },
     { name: 'ሐሙስ', val: 3 },
     { name: 'ረቡዕ', val: 4 },
@@ -89,7 +90,7 @@ class Constants {
     { name: 'ቅዳሜ', val: 8 },
   ];
 
-  private weekdays: Array<String> = ['ሰኞ', 'ማግሰኞ', 'ረቡዕ', 'ሐሙስ', 'አርብ', 'ቅዳሜ', 'እሁድ'];
+  private weekdays: Array<string> = ['ሰኞ', 'ማግሰኞ', 'ረቡዕ', 'ሐሙስ', 'አርብ', 'ቅዳሜ', 'እሁድ'];
 
   get _unixEpoch(): number {
     return this.unixEpoch;
@@ -99,14 +100,14 @@ class Constants {
     return this.ethiopicEpoch;
   }
 
-  get _months(): Array<String> {
+  get _months(): Array<string> {
     return this.months;
   }
 
-  get _dayNumbers(): Array<String> {
+  get _dayNumbers(): Array<string> {
     return this.dayNumbers;
   }
-  get _weekdays(): Array<String> {
+  get _weekdays(): Array<string> {
     return this.weekdays;
   }
 
@@ -127,7 +128,7 @@ class Constants {
     return this._maxMillisecondsSinceEpoch;
   }
 
-  get evangelists(): Array<String> {
+  get evangelists(): Array<string> {
     return this._evangelists;
   }
 
@@ -147,7 +148,7 @@ class Constants {
     return this.yeeletTewsak;
   }
 
-  get _yebealTewsak(): Object {
+  get _yebealTewsak(): { [index: string]: number } {
     return this.yebealTewsak;
   }
 }

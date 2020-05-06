@@ -1,9 +1,9 @@
 //
 import Datetime from '../Interfaces/EDT';
 import { constants } from '../utils/constants';
-import { Duration } from '../utils/duration';
+// import { Duration } from '../utils/duration';
 
-export default class EtDatetime implements Datetime {
+class EtDatetime implements Datetime {
   // Fields
   moment: number;
   fixed: number;
@@ -27,15 +27,17 @@ export default class EtDatetime implements Datetime {
 
   constructor(...args: any[]) {
     if (args.length >= 2) {
-      this.fixed = this.fixedFromEthiopic(this.toNumber(args[0]), args[1] as number, args[2] as number);
-      this.moment = this.dateToEpoch(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-
+      this.fixed = this.fixedFromEthiopic(this.toNumber(args[0]), this.toNumber(args[1]), this.toNumber(args[2]));
+      this.moment = this.dateToEpoch(this.toNumber(args[0]), this.toNumber(args[1]), this.toNumber(args[2]), this.toNumber(args[3]), this.toNumber(args[4]), this.toNumber(args[5]), this.toNumber(args[6]));
       if (this.fixed == null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
-    } else if (args.length === 1) {
-      this.fromMillisecondsSinceEpoch(args[0]);
-    } else {
-    // when no argument
     }
+
+    if (args.length === 1) {
+      this.fromMillisecondsSinceEpoch(this.toNumber(args[0]));
+    }
+
+    this.fixed = this.fixedFromUnix(Date.now());
+    this.moment = Date.now();
   }
 
   fromMillisecondsSinceEpoch(millisecondsSinceEpoch: number) {
@@ -49,10 +51,20 @@ export default class EtDatetime implements Datetime {
       throw new Error(`Calendar out side valid range ${constants.maxMillisecondsSinceEpoch}`);
   }
 
-  toNumber(value: any): number {
-    // TODO: http://www.ecma-international.org/ecma-262/6.0/#sec-tonumber
-    return 1;
+  private toNumber(value: any): number {
+    if (value === undefined) return NaN;
+    if (value === null) return 0;
+    if (typeof value === "boolean") {
+      if (value) return 1;
+      else return 0;
+    }
+    if (typeof value === "string") return parseInt(value)
+    if (typeof value === "symbol") throw new Error('TYPE ERROR: Unexpected operand type.')
+    if (typeof value === "object") throw new Error('TYPE ERROR: Unexpected operand type.')
+    return value;
   }
+
+
 
   now() {
     this.fixed = this.fixedFromUnix(Date.now());
@@ -227,3 +239,7 @@ export default class EtDatetime implements Datetime {
   //       r'(?:[ T](\d\d)(?::?(\d\d)(?::?(\d\d)(?:[.,](\d+))?)?)?$' // Time part.
   //       r'( ?[zZ]| ?([-+])(\d\d)(?::?(\d\d))?)?)?$');
 }
+
+export default EtDatetime;
+
+

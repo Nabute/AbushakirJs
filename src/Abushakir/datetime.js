@@ -1,6 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var constants_1 = require("../utils/constants");
+// import { Duration } from '../utils/duration';
 var EtDatetime = /** @class */ (function () {
     // Parameterized Constructor
     // constructor(
@@ -184,7 +185,7 @@ var EtDatetime = /** @class */ (function () {
             hour: this.twoDigits(this.hour),
             min: this.twoDigits(this.minute),
             sec: this.twoDigits(this.second),
-            ms: this.threeDigits(this.millisecond),
+            ms: this.threeDigits(this.millisecond)
         };
     };
     EtDatetime.prototype.toIso8601String = function () {
@@ -273,10 +274,4 @@ var EtDatetime = /** @class */ (function () {
     };
     return EtDatetime;
 }());
-exports.default = EtDatetime;
-var a = new EtDatetime(2012, 11, 4);
-console.log(a.year);
-console.log(a.month);
-console.log(a.day);
-console.log(a.fixed);
-console.log(a.toString());
+exports["default"] = EtDatetime;
