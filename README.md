@@ -1,12 +1,12 @@
 # [AbushakirJs](https://www.npmjs.com/package/abushakir) \(ባሕረ ሃሳብ\)
 
-### What does it mean?
+## What does it mean?
+
+
+"Bahire Hasab /'bəhrɛ həsəb'/ " simply means "An age with a descriptive and chronological number". In some books it can also be found as "Hasabe Bahir", in a sense giving time an analogy, resembling a sea.
 
 The words Bahire Hasab originate from the ancient language of Ge'ez, \( Arabic: Abu Shakir\) is a time-tracking method, devised by the 12th pope of Alexandria, Pope St. Dimitri.
 
-## What does it mean?
-
-"Bahire Hasab /'bəhrɛ həsəb'/ " simply means "An age with a descriptive and chronological number". In some books it can also be found as "Hasabe Bahir", in a sense giving time an analogy, resembling a sea.
 
 This package allows developers to implement Ethiopian Calendar and Datetime System in their application\(s\)\`.
 
@@ -20,10 +20,16 @@ Unix Epoch is measured using milliseconds since 01 Jan, 1970 UTC. In UNIX EPOCH 
 npm i abushakir
 ```
 
+## Import it
+
+```typescript
+import { EtDatetime, ETC, BahireHasab } from 'abushakir';
+```
+
 ## Example
 
 ```typescript
-// Copyright 2020 GC (2012 ETC) Nabute. All rights reserved.
+// Copyright 2012 (2020 GC) Nabute. All rights reserved.
 // Use of this source code is governed by MIT license, which can be found
 // in the LICENSE file.
 
@@ -31,51 +37,37 @@ npm i abushakir
 /// Time with the unique Calendar system which includes the way ethiopians
 /// use to find movable feasts and holiday.
 
-import { EtDatetime, ETC, BahireHasab } from '..';
+"use strict";
+import { EtDatetime, ETC, BahireHasab } from "abushakir";
 
-
+console.log("\n**********   Ethiopian Date and Time Section   *************\n");
 // Ethiopian Datetime Module [EtDatetime]
-const now: EtDatetime = new EtDatetime(); // => 2012-07-28 17:18:31.466
-const nowDate = now.date; // => {year: 2012, month: 7, day: 28}
-const nowTIme = now.time; // => {h: 17, m: 18, s: 31}
+var now = new EtDatetime(); // => 2012-07-28 17:18:31.466
+console.log("Priting Now's Date := ", now.date); // => {year: 2012, month: 7, day: 28}
+console.log("Priting Now's Time := ", now.time); // => {h: 17, m: 18, s: 31}
+var covidFirstConfirmed = new EtDatetime(2012, 7, 4);
+var covidFirstConfirmedEpoch = new EtDatetime(covidFirstConfirmed.moment);
+console.log("Comparing 'isAtSameMomentAs' := ", covidFirstConfirmed.isAtSameMomentAs(covidFirstConfirmedEpoch));
 
-const covidFirstConfirmed: EtDatetime = new EtDatetime(2012, 7, 4);
-const covidFirstConfirmedEpoch: EtDatetime = new EtDatetime(covidFirstConfirmed.moment);
 
-// let covidFirstDeath: EtDatetime = EtDatetime.parse("2012-07-26 23:00:00");
-
-/// Comparison of two EtDatetime Instances
-// Duration daysWithOutDeath = covidFirstConfirmed.difference(covidFirstDeath);
-
-// daysWithOutDeath.inDays); // 22 days
-
-// assert(covidFirstDeath.isAfter(covidFirstConfirmed), true);
-
-// assert(covidFirstDeath.isBefore(now), true);
-
-covidFirstConfirmed.isAtSameMomentAs(covidFirstConfirmedEpoch);
-
+console.log("\n**********   Ethiopian Calendar Section   *************\n");
 // Ethiopian Calendar Module [ETC]
-const ethiopianCalendar: ETC = new ETC(2011, 13, 4);
-
+var ethiopianCalendar = new ETC(2011, 13, 4);
 ///
-ethiopianCalendar.monthDays(true, true); // Iterable Object of the given month
-ethiopianCalendar.monthDays(); // => [2012, 7, 1, 1]
+console.log(ethiopianCalendar.monthDays(true, true)); // Iterable Object of the given month
+console.log(ethiopianCalendar.monthDays()); // => [2012, 7, 1, 1]
 // [year, month, dateNumber, dateNameIndex], Monday as First weekday
+console.log("Printing Next Month:= ", ethiopianCalendar.nextMonth); // => ETC instance of nextMonth, same year
+console.log("Printing Previous Year:= ", ethiopianCalendar.prevYear); // => ETC instance of prevYear, same month
 
-const nextmonth = ethiopianCalendar.nextMonth; // => ETC instance of nextMonth, same year
-const previousmonth = ethiopianCalendar.prevYear; // => ETC instance of prevYear, same month
 
-
+console.log("\n**********   Bahire Hasab Section   *************\n");
 // Bahire Hasab Module [BahireHasab]
-const bh: BahireHasab = new BahireHasab(2011);
+var bh = new BahireHasab(2011);
 //  let bh: BahireHasab = new BahireHasab(); // Get's the current year
-
-bh.getEvangelist(true); // => ሉቃስ
-
-bh.getSingleBealOrTsom('ትንሳኤ'); // {month: ሚያዝያ, date: 20}
-
-const allFastings = bh.allAtswamat; // => List of All fasting and Movable holidays
+console.log("Printing 2011's Evangelist := ", bh.getEvangelist(true)); // => ሉቃስ
+console.log("Printing 2011's ትንሳኤ date := ", bh.getSingleBealOrTsom('ትንሳኤ')); // {month: ሚያዝያ, date: 20}
+console.log("Printing 2011's allAtswamat := ", bh.allAtswamat); // => List of All fasting and Movable holidays
 
 ```
 

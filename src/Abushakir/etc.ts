@@ -1,4 +1,8 @@
-//
+// Copyright 2012 (2020 GC) Nabute. All rights reserved.
+// Use of this source code is governed by MIT license, which can be found
+// in the LICENSE file.
+
+
 import { Calendar } from '../Interfaces/Calendar';
 import EtDatetime from '../Abushakir/datetime';
 import { constants } from '../utils/constants';
