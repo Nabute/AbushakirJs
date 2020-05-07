@@ -2,7 +2,6 @@
 // Use of this source code is governed by MIT license, which can be found
 // in the LICENSE file.
 
-
 import EtDatetime from '../Abushakir/datetime';
 import Duration from '../utils/duration';
 

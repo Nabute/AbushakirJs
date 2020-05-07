@@ -2,7 +2,6 @@
 // Use of this source code is governed by MIT license, which can be found
 // in the LICENSE file.
 
-
 interface Tewsak {
   name: string;
   val: number;
