@@ -6,7 +6,6 @@
 /// Time with the unique Calendar system which includes the way ethiopians
 /// use to find movable feasts and holiday.
 
-import 'package:abushakir/abushakir.dart';
 import { EtDatetime, ETC, BahireHasab } from '..';
 
 /**

@@ -2,7 +2,7 @@ import ETC from '../Abushakir/etc';
 import { constants } from '../utils/constants';
 
 describe('Testing Ethiopian Calendar for "ጷጉሜን" month...', () => {
-  var someYear: ETC = new ETC(2011, 13, 6);
+  const someYear: ETC = new ETC(2011, 13, 6);
 
   test('Testing Year', () => {
     expect(someYear.year).toBe(2011);
