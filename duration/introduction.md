@@ -10,13 +10,33 @@ A Duration represents a difference from one point in time to another. The durati
 
 Despite the same name, a Duration object does not implement `Durations` as specified by ISO 8601. In particular, a duration object does not keep track of the individually provided members \(such as "days" or "hours"\), but only uses these arguments to compute the length of the corresponding time interval.
 
-To create a new Duration object, use this class's single constructor giving the appropriate arguments:
+To create a new Duration object, use this class's single constructor giving the appropriate arguments whose value will be the sum of all individual arguments.
 
-```text
-A `Duration` represents a difference from one point in time to another. The
+```typescript
+const hourDifference: Duration = new Duration(2, 0, 0, 0, 0, 0);
 ```
 
-```text
+Duration class has all the functionalities to apply Arithmetic operations like
 
-```
+* Addition
+* Subtraction
+* Multiplication
+* Division
+
+and also Equality and Relational Operations like
+
+* Greater than \(&gt;\)
+* Greater than and Equal to \(&gt;=\)
+* Less than \(&lt;\)
+* Less than and Equal to \(&lt;=\)
+* Equality \(=\)
+
+Duration class can also return the given time duration or span in different ways, like
+
+* In Days
+* In Hours
+* In Minutes
+* In Seconds
+* In Milliseconds and 
+* In Microseconds
 
