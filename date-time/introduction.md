@@ -42,3 +42,15 @@ const samemoment: boolean = covidFirstConfirmed.isAtSameMomentAs(covidFirstConfi
 
  Use the **add** and **subtract** methods with a `Duration` object to create a new `EtDatetime` object based on another. For example, to find the date that is sixty days \(24 \* 60 hours\) after today, write:
 
+```typescript
+const afterTwoDays = now.add(new Duration(2, 0, 0, 0, 0, 0)) // Adds 2 days from today.
+```
+
+{% hint style="info" %}
+#### NOTE <a id="note"></a>
+
+There is no UTC or TIme zone feature in this package since it's built only for Ethiopia.
+{% endhint %}
+
+For further reading, please refer the [Dart Documentation](https://pub.dev/documentation/abushakir/latest/abushakir/EtDatetime-class.html) 
+
