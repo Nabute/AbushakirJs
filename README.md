@@ -1,4 +1,4 @@
-# AbushakirJs (ባሕረ ሃሳብ)
+# [AbushakirJs](https://www.npmjs.com/package/abushakir) (ባሕረ ሃሳብ)
 
 The words Bahire Hasab originate from the ancient language of Ge'ez, ( Arabic: Abu Shakir) is a
 time-tracking method, devised by the 12th pope of Alexandria, Pope St. Dimitri.
@@ -17,8 +17,6 @@ Unix Epoch is measured using milliseconds since 01 Jan, 1970 UTC. In unix epoch 
 
 ## Getting started
 
-In the `pubspec.yaml` of your flutter project, add the following dependency:
-
 ```node
 npm i abushakir
 ```
@@ -26,7 +24,7 @@ npm i abushakir
 ## Example
 
 ```typescript
-   // Copyright 2020 GC (2012 ETC) Nabute. All rights reserved.
+// Copyright 2020 GC (2012 ETC) Nabute. All rights reserved.
 // Use of this source code is governed by MIT license, which can be found
 // in the LICENSE file.
 
