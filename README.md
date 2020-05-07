@@ -1,10 +1,4 @@
----
-description: Ethiopian Date-time and Calendar Reckoning system. COMPUTUS.
----
-
 # AbushakirJs \(ባሕረ ሃሳብ\)
-
-## What does it mean?
 
 "Bahire Hasab /'bəhrɛ həsəb'/ " simply means "An age with a descriptive and chronological number". In some books it can also be found as "Hasabe Bahir", in a sense giving time an analogy, resembling a sea.
 
@@ -27,6 +21,8 @@ npm i abushakir
 ```typescript
 import { EtDatetime, ETC, BahireHasab } from 'abushakir';
 ```
+## Documentation
+[AbushakirJs](https://nabute-foundation.gitbook.io/abushakir_js)
 
 ## Example
 
