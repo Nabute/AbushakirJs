@@ -1,5 +1,5 @@
 {
-  "name": "abushakir-js",
+  "name": "abushakir",
   "version": "1.2.0",
   "description": "Ethiopian Datetime and Calendar Reckoning system. COMPUTUS.",
   "main": "lib/index.js",
@@ -54,8 +54,5 @@
     "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.8.3"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
