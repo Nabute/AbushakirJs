@@ -1,12 +1,8 @@
-# [AbushakirJs](https://www.npmjs.com/package/abushakir) \(ባሕረ ሃሳብ\)
-
-## What does it mean?
-
+# AbushakirJs \(ባሕረ ሃሳብ\)
 
 "Bahire Hasab /'bəhrɛ həsəb'/ " simply means "An age with a descriptive and chronological number". In some books it can also be found as "Hasabe Bahir", in a sense giving time an analogy, resembling a sea.
 
 The words Bahire Hasab originate from the ancient language of Ge'ez, \( Arabic: Abu Shakir\) is a time-tracking method, devised by the 12th pope of Alexandria, Pope St. Dimitri.
-
 
 This package allows developers to implement Ethiopian Calendar and Datetime System in their application\(s\)\`.
 
@@ -25,6 +21,8 @@ npm i abushakir
 ```typescript
 import { EtDatetime, ETC, BahireHasab } from 'abushakir';
 ```
+## Documentation
+[AbushakirJs](https://nabute-foundation.gitbook.io/abushakir_js)
 
 ## Example
 
@@ -68,7 +66,6 @@ var bh = new BahireHasab(2011);
 console.log("Printing 2011's Evangelist := ", bh.getEvangelist(true)); // => ሉቃስ
 console.log("Printing 2011's ትንሳኤ date := ", bh.getSingleBealOrTsom('ትንሳኤ')); // {month: ሚያዝያ, date: 20}
 console.log("Printing 2011's allAtswamat := ", bh.allAtswamat); // => List of All fasting and Movable holidays
-
 ```
 
 ## Contact
