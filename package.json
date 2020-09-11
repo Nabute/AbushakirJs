@@ -1,5 +1,5 @@
 {
-  "name": "abushakir",
+  "name": "abushakir-js",
   "version": "1.2.0",
   "description": "Ethiopian Datetime and Calendar Reckoning system. COMPUTUS.",
   "main": "lib/index.js",
