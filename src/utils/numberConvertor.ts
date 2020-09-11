@@ -25,7 +25,7 @@ function divide(denominator: number, numinator: number): number[] {
   // let quetient: number = numinator / denominator;
   // let remainder: number = numinator % denominator;
 
-  return [numinator / denominator, numinator % denominator];
+  return [Math.floor(numinator / denominator), numinator % denominator];
 }
 
 function convert_1_2_10_to_ethiopic(num: number): string {
@@ -49,18 +49,16 @@ function convert_11_2_100_to_ethiopic(num: number) {
 function convert_101_2_1000_to_ethiopic(num: number) {
   const result = divide(100, num);
   if (result[1] === 0) {
-    return '{ethiopicNumber[q]}{ethiopicNumber[100]}';
+    return `${ethiopicNumber[result[0]]}${ethiopicNumber[100]}`;
   }
-  let left: string;
-  result[1] <= 10 ? (left = convert_1_2_10_to_ethiopic(result[0])) : (left = convert_11_2_100_to_ethiopic(result[0]));
+  const left: string = result[0] === 1 ? `${ethiopicNumber[100]}` : `${ethiopicNumber[result[0]]}${ethiopicNumber[100]}`;
 
-  let right: string;
-  result[1] <= 10 ? (right = convert_1_2_10_to_ethiopic(result[1])) : (right = convert_11_2_100_to_ethiopic(result[1]));
+  const right: string = result[1] <= 10 ? convert_1_2_10_to_ethiopic(result[1]) : convert_11_2_100_to_ethiopic(result[1]);
 
   return `${left}${right}`;
 }
 
-function convert_to_ethiopic(num: number) {
+function ConvertToEthiopic(num: number) {
   if (typeof num !== 'number') {
     throw new TypeError('Please provide Integer');
   }
@@ -95,4 +93,4 @@ function convert_to_ethiopic(num: number) {
   }
 }
 
-export default convert_to_ethiopic;
+export default ConvertToEthiopic;

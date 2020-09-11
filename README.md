@@ -27,7 +27,7 @@ import { EtDatetime, ETC, BahireHasab } from 'abushakir';
 ## Example
 
 ```typescript
-// Copyright 2012 (2020 GC) Nabute. All rights reserved.
+// Copyright 2012 ETC (2020 GC) Nabute. All rights reserved.
 // Use of this source code is governed by MIT license, which can be found
 // in the LICENSE file.
 
@@ -35,37 +35,66 @@ import { EtDatetime, ETC, BahireHasab } from 'abushakir';
 /// Time with the unique Calendar system which includes the way ethiopians
 /// use to find movable feasts and holiday.
 
-"use strict";
-import { EtDatetime, ETC, BahireHasab } from "abushakir";
+import { EtDatetime, ETC, BahireHasab, ConvertToEthiopic } from '..';
 
-console.log("\n**********   Ethiopian Date and Time Section   *************\n");
-// Ethiopian Datetime Module [EtDatetime]
-var now = new EtDatetime(); // => 2012-07-28 17:18:31.466
-console.log("Priting Now's Date := ", now.date); // => {year: 2012, month: 7, day: 28}
-console.log("Priting Now's Time := ", now.time); // => {h: 17, m: 18, s: 31}
-var covidFirstConfirmed = new EtDatetime(2012, 7, 4);
-var covidFirstConfirmedEpoch = new EtDatetime(covidFirstConfirmed.moment);
-console.log("Comparing 'isAtSameMomentAs' := ", covidFirstConfirmed.isAtSameMomentAs(covidFirstConfirmedEpoch));
+/**
+ * Ethiopian Datetime Module [EtDatetime]
+ */
+const now: EtDatetime = new EtDatetime(); // => 2012-07-28 17:18:31.466
+const nowDate = now.date; // => {year: 2012, month: 7, day: 28}
+const nowTIme = now.time; // => {h: 17, m: 18, s: 31}
 
+const covidFirstConfirmed: EtDatetime = new EtDatetime(2012, 7, 4);
+const covidFirstConfirmedEpoch: EtDatetime = new EtDatetime(covidFirstConfirmed.moment);
 
-console.log("\n**********   Ethiopian Calendar Section   *************\n");
-// Ethiopian Calendar Module [ETC]
-var ethiopianCalendar = new ETC(2011, 13, 4);
+// let covidFirstDeath: EtDatetime = EtDatetime.parse("2012-07-26 23:00:00");
+
+/// Comparison of two EtDatetime Instances
+// Duration daysWithOutDeath = covidFirstConfirmed.difference(covidFirstDeath);
+
+// daysWithOutDeath.inDays); // 22 days
+
+// assert(covidFirstDeath.isAfter(covidFirstConfirmed), true);
+
+// assert(covidFirstDeath.isBefore(now), true);
+
+covidFirstConfirmed.isAtSameMomentAs(covidFirstConfirmedEpoch);
+
+/**
+ * Ethiopian Calendar Module [ETC]
+ */
+const ethiopianCalendar: ETC = new ETC(2011, 13, 4);
+
 ///
-console.log(ethiopianCalendar.monthDays(true, true)); // Iterable Object of the given month
-console.log(ethiopianCalendar.monthDays()); // => [2012, 7, 1, 1]
+ethiopianCalendar.monthDays(true, true); // Iterable Object of the given month
+ethiopianCalendar.monthDays(); // => [2012, 7, 1, 1]
 // [year, month, dateNumber, dateNameIndex], Monday as First weekday
-console.log("Printing Next Month:= ", ethiopianCalendar.nextMonth); // => ETC instance of nextMonth, same year
-console.log("Printing Previous Year:= ", ethiopianCalendar.prevYear); // => ETC instance of prevYear, same month
 
+const nextmonth = ethiopianCalendar.nextMonth; // => ETC instance of nextMonth, same year
+const previousmonth = ethiopianCalendar.prevYear; // => ETC instance of prevYear, same month
 
-console.log("\n**********   Bahire Hasab Section   *************\n");
-// Bahire Hasab Module [BahireHasab]
-var bh = new BahireHasab(2011);
+/**
+ * Bahire Hasab Module [BahireHasab]
+ */
+const bh: BahireHasab = new BahireHasab(2011);
 //  let bh: BahireHasab = new BahireHasab(); // Get's the current year
-console.log("Printing 2011's Evangelist := ", bh.getEvangelist(true)); // => ሉቃስ
-console.log("Printing 2011's ትንሳኤ date := ", bh.getSingleBealOrTsom('ትንሳኤ')); // {month: ሚያዝያ, date: 20}
-console.log("Printing 2011's allAtswamat := ", bh.allAtswamat); // => List of All fasting and Movable holidays
+
+bh.getEvangelist(true); // => ሉቃስ
+
+bh.getSingleBealOrTsom('ትንሳኤ'); // {month: ሚያዝያ, date: 20}
+
+const allFastings = bh.allAtswamat; // => List of All fasting and Movable holidays
+
+/**
+ * Arabic or English number (1,2,3...) to Ethiopic or GE'EZ number Convertor
+ */
+
+const testNums: number[] = [1, 10, 15, 20, 25, 78, 105, 333, 450, 600, 1000, 1001, 1010, 1056, 1200, 2013, 9999, 10000]
+
+for (const num of testNums) {
+    console.log(ConvertToEthiopic(num)); // [፲, ፲፭, ፳, ፳፭, ፸፰, ፻፭, ፫፻፴፫, ፬፻፶, ፮፻, ፲፻, ፲፻፩, ፲፻፲, ፲፻፶፮, ፲፪፻, ፳፻፲፫, ፺፱፻፺፱, ፻፻]
+}
+
 ```
 
 ## Contact
