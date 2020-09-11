@@ -51,9 +51,11 @@ function convert_101_2_1000_to_ethiopic(num: number) {
   if (result[1] === 0) {
     return `${ethiopicNumber[result[0]]}${ethiopicNumber[100]}`;
   }
-  const left: string = result[0] === 1 ? `${ethiopicNumber[100]}` : `${ethiopicNumber[result[0]]}${ethiopicNumber[100]}`;
+  const left: string =
+    result[0] === 1 ? `${ethiopicNumber[100]}` : `${ethiopicNumber[result[0]]}${ethiopicNumber[100]}`;
 
-  const right: string = result[1] <= 10 ? convert_1_2_10_to_ethiopic(result[1]) : convert_11_2_100_to_ethiopic(result[1]);
+  const right: string =
+    result[1] <= 10 ? convert_1_2_10_to_ethiopic(result[1]) : convert_11_2_100_to_ethiopic(result[1]);
 
   return `${left}${right}`;
 }
