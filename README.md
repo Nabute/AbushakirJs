@@ -22,7 +22,7 @@ npm i abushakir
 import { EtDatetime, ETC, BahireHasab, ConvertToEthiopic } from 'abushakir';
 ```
 ## Documentation
-[AbushakirJs](https://nabute-foundation.gitbook.io/abushakir_js)
+[AbushakirJs](https://nabute925.gitbook.io/abushakir_js/)
 
 ## Example
 
