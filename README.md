@@ -24,6 +24,9 @@ import { EtDatetime, ETC, BahireHasab, ConvertToEthiopic } from 'abushakir';
 ## Documentation
 [AbushakirJs](https://nabute925.gitbook.io/abushakir_js/)
 
+## Demo
+[Ethiopian Calendar](https://github.com/Nabute/Abushakir-VueJs)
+
 ## Example
 
 ```typescript
