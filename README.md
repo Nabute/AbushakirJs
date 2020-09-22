@@ -19,10 +19,13 @@ npm i abushakir
 ## Import it
 
 ```typescript
-import { EtDatetime, ETC, BahireHasab } from 'abushakir';
+import { EtDatetime, ETC, BahireHasab, ConvertToEthiopic } from 'abushakir';
 ```
 ## Documentation
-[AbushakirJs](https://nabute-foundation.gitbook.io/abushakir_js)
+[AbushakirJs](https://nabute925.gitbook.io/abushakir_js/)
+
+## Demo
+[Ethiopian Calendar](https://github.com/Nabute/Abushakir-VueJs)
 
 ## Example
 
