@@ -5,56 +5,80 @@
 import EtDatetime from './datetime';
 import { constants } from '../utils/constants';
 
-interface Tewsak {
-  name: string;
-  val: number;
-}
-
+/**
+ * Represents a class for Bahire Hasab calculations.
+ */
 export default class BahireHasab {
   private _year: number;
 
+  /**
+   * Initializes a new instance of the BahireHasab class.
+   * @param {number} year - The Ethiopian year (negative for the current year).
+   */
   constructor(year: number) {
-    year < 0 ? (this._year = new EtDatetime(Date.now()).year) : (this._year = year);
+    this._year = year < 0 ? new EtDatetime(Date.now()).year : year;
   }
 
+  /**
+   * Gets the current Ethiopian year.
+   */
   get ameteAlem(): number {
     return constants.ameteFida + this._year;
   }
 
-  getEvangelist(returnName: boolean = false): string {
-    let evangelist: number;
-    evangelist = this.ameteAlem % 4;
-    if (returnName) {
-      return constants.evangelists[evangelist];
-    }
-    return evangelist.toString();
+  /**
+   * Gets the Evangelist for the current year.
+   * @param {boolean} returnName - If true, returns the name; otherwise, returns the number.
+   * @returns {string | number} - The Evangelist name or number.
+   */
+  getEvangelist(returnName: boolean = false): string | number {
+    const evangelist: number = this.ameteAlem % 4;
+    return returnName ? constants.evangelists[evangelist] : evangelist;
   }
 
-  getMeskeremOne(returnName: boolean = false) {
+  /**
+   * Gets the Meskerem One for the current year.
+   * @param {boolean} returnName - If true, returns the name; otherwise, returns the number.
+   * @returns {string | number} - The Meskerem One name or number.
+   */
+  getMeskeremOne(returnName: boolean = false): string {
     const rabeet: number = Math.floor(this.ameteAlem / 4);
     const result: number = (this.ameteAlem + rabeet) % 7;
-    if (returnName) return constants._weekdays[result];
-    return result.toString();
+    return returnName ? constants._weekdays[result] : result.toString();
   }
 
+  /**
+   * Gets the Wenber value for the current year.
+   */
   get wenber(): number {
-    return (this.ameteAlem % 19) - 1 < 0 ? 0 : (this.ameteAlem % 19) - 1;
+    return Math.max(0, (this.ameteAlem % 19) - 1);
   }
 
+  /**
+   * Gets the Abeqte value for the current year.
+   */
   get abekte(): number {
     return (this.wenber * constants.tinteAbekte) % 30;
   }
 
+  /**
+   * Gets the Metkih value for the current year.
+   */
   get metkih(): number {
     return this.wenber === 0 ? 30 : (this.wenber * constants.tinteMetkih) % 30;
   }
 
+  /**
+   * Determines the Yebeale Metkih Wer for the current year.
+   */
   yebealeMetkihWer(): number {
-    if (this.metkih > 14) {
-      return 1;
-    } else return 2;
+    return this.metkih > 14 ? 1 : 2;
   }
 
+  /**
+   * Gets the Nenewe (month and date) for the current year.
+   * @returns {{ month: string; date: number }} - The Nenewe information.
+   */
   get nenewe(): { month: string; date: number } {
     const meskerem1 = this.getMeskeremOne(true);
     const month = this.yebealeMetkihWer();
@@ -81,6 +105,10 @@ export default class BahireHasab {
     return { month: monthName, date: date % 30 === 0 ? 30 : date % 30 };
   }
 
+  /**
+   * Gets all Atswamat for the current year.
+   * @returns {{ beal: string; day: object }[]} - Array of Atswamat information.
+   */
   get allAtswamat(): { beal: string; day: object }[] {
     const mebajaHamer: { month: string; date: number } = this.nenewe;
     const result: any[] = [];
@@ -104,28 +132,39 @@ export default class BahireHasab {
     return result;
   }
 
+  /**
+   * Checks if a holiday is movable.
+   * @param {string} holidayName - The name of the holiday.
+   * @returns {boolean} - True if movable; otherwise, false.
+   * @throws {Error} - If the holiday is not movable.
+   */
   isMovableHoliday(holidayName: string): boolean {
     if (constants._yebealTewsak.hasOwnProperty(holidayName)) {
       return true;
-    } else
+    } else {
       throw new Error(
         "FEASTNAME ERROR: Holiday or Feast is not a movable one. Please provide holidays between 'ነነዌ' and ጾመ 'ድህነት'",
       );
+    }
   }
 
-  getSingleBealOrTsom(name: string) {
+  /**
+   * Gets the date for a single Beal or Tsom.
+   * @param {string} name - The name of the Beal or Tsom.
+   * @returns {{ month: string; date: number } | undefined} - The date information, or undefined if not movable.
+   */
+  getSingleBealOrTsom(name: string): { month: string; date: number } | undefined {
     const status: boolean = this.isMovableHoliday(name);
     if (status) {
       const mebajaHamer: { month: string; date: number } = this.nenewe;
       const target: number = constants._yebealTewsak[name];
-      const a = {
+      return {
         month:
           constants._months[
             constants._months.indexOf(mebajaHamer.month) + Math.floor((mebajaHamer.date + target) / 30)
           ],
         date: (mebajaHamer.date + target) % 30 === 0 ? 30 : (mebajaHamer.date + target) % 30,
       };
-      return a;
     }
   }
 }

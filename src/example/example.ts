@@ -67,18 +67,19 @@ for (const num of testNums) {
 }
 
 /*
-  * Conversion from any calendar (for instance, from Gregorian) into Ethiopian Calendar.
-  */
+ * Conversion from any calendar (for instance, from Gregorian) into Ethiopian Calendar.
+ */
 const gregorian1: number = Date.now();
 const ethiopian1: EtDatetime = new EtDatetime(gregorian1);
 
-console.log(`Gregorian := ${new Date(gregorian1).toISOString()} is equivalent to Ethiopian ${ethiopian1.toIso8601String()}`);
+console.log(
+  `Gregorian := ${new Date(gregorian1).toISOString()} is equivalent to Ethiopian ${ethiopian1.toIso8601String()}`,
+);
 // Gregorian := 2020-09-22T22:43:33.077Z is equivalent to Ethiopian 2013-01-12T22:43:33.077
 
-
 /*
-* Conversion from Ethiopian Calendar into any calendar (for instance, to Gregorian).
-*/
+ * Conversion from Ethiopian Calendar into any calendar (for instance, to Gregorian).
+ */
 const ethiopian: EtDatetime = new EtDatetime();
 const gregorian: Date = new Date(ethiopian.moment);
 
@@ -88,3 +89,5 @@ console.log(`Ethiopian ${ethiopian.toIso8601String()} is equivalent to Gregorian
 console.log(`Ethiopian EPOCH := ${ethiopian.moment}`); // Ethiopian EPOCH := 1600814613078
 console.log(`Gregorian EPOCH := ${gregorian.valueOf()}`); // Gregorian EPOCH := 1600814613078
 
+const date = new EtDatetime(2013, 1, 11);
+console.log(date);
