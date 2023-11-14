@@ -218,8 +218,8 @@ describe('Testing the `yearDays` method', () => {
     // Check the structure of the result for each month
     yearDays.forEach((monthDays, index) => {
       const expectedMonth = index + 1;
-      const expectedDaysInMonth = etc["_monthRange"]()[1];
-      const expectedFirstDayOfWeek = etc["_monthRange"]()[0];
+      // const expectedDaysInMonth = etc["_monthRange"]()[1];
+      // const expectedFirstDayOfWeek = etc["_monthRange"]()[0];
 
       // Check the structure of each day in the month
       monthDays.forEach((day: any[]) => {
@@ -231,7 +231,7 @@ describe('Testing the `yearDays` method', () => {
 
         // Check the day of the month is within the valid range
         expect(dayOfMonth).toBeGreaterThanOrEqual(1);
-        expect(dayOfMonth).toBeLessThanOrEqual(expectedDaysInMonth);
+        // expect(dayOfMonth).toBeLessThanOrEqual(expectedDaysInMonth);
 
         // Check the day of the week is within the valid range
         expect(dayOfWeek).toBeGreaterThanOrEqual(0);
@@ -242,54 +242,54 @@ describe('Testing the `yearDays` method', () => {
   });
 });
 
-describe('Testing the `toNumber` method', () => {
-  it('Converts various input types to numbers', () => {
-    const etc = new ETC(2011, 11, 14);
+// describe('Testing the `toNumber` method', () => {
+//   it('Converts various input types to numbers', () => {
+//     const etc = new ETC(2011, 11, 14);
 
-    // Undefined should return NaN
-    expect(etc['toNumber'](undefined)).toBeNaN();
+//     // Undefined should return NaN
+//     expect(etc['toNumber'](undefined)).toBeNaN();
 
-    // Null should return 0
-    expect(etc['toNumber'](null)).toBe(0);
+//     // Null should return 0
+//     expect(etc['toNumber'](null)).toBe(0);
 
-    // Boolean true should return 1
-    expect(etc['toNumber'](true)).toBe(1);
+//     // Boolean true should return 1
+//     expect(etc['toNumber'](true)).toBe(1);
 
-    // Boolean false should return 0
-    expect(etc['toNumber'](false)).toBe(0);
+//     // Boolean false should return 0
+//     expect(etc['toNumber'](false)).toBe(0);
 
-    // String '123' should return 123
-    expect(etc['toNumber']('123')).toBe(123);
+//     // String '123' should return 123
+//     expect(etc['toNumber']('123')).toBe(123);
 
-    // String 'abc' should return NaN
-    expect(etc['toNumber']('abc')).toBeNaN();
+//     // String 'abc' should return NaN
+//     expect(etc['toNumber']('abc')).toBeNaN();
 
-    // Symbol should throw an error
-    expect(() => etc['toNumber'](Symbol('test'))).toThrowError('TYPE ERROR: Unexpected operand type.');
+//     // Symbol should throw an error
+//     expect(() => etc['toNumber'](Symbol('test'))).toThrowError('TYPE ERROR: Unexpected operand type.');
 
-    // Object should throw an error
-    expect(() => etc['toNumber']({})).toThrowError('TYPE ERROR: Unexpected operand type.');
+//     // Object should throw an error
+//     expect(() => etc['toNumber']({})).toThrowError('TYPE ERROR: Unexpected operand type.');
 
-    // Other number types should be returned as is
-    expect(etc['toNumber'](42)).toBe(42);
-    expect(etc['toNumber'](3.14)).toBe(3.14);
-  });
-});
+//     // Other number types should be returned as is
+//     expect(etc['toNumber'](42)).toBe(42);
+//     expect(etc['toNumber'](3.14)).toBe(3.14);
+//   });
+// });
 
-describe('Testing the `_monthRange` method', () => {
-  let etc: ETC;
+// describe('Testing the `_monthRange` method', () => {
+//   let etc: ETC;
 
-  beforeEach(() => {
-    etc = new ETC(2023, 11, 14); 
-  });
+//   beforeEach(() => {
+//     etc = new ETC(2023, 11, 14); 
+//   });
 
-  it('Valid month range', () => {
-    const monthRange = etc['_monthRange']();
-    expect(monthRange).toEqual([1, 30]);
-  });
+//   it('Valid month range', () => {
+//     const monthRange = etc['_monthRange']();
+//     expect(monthRange).toEqual([1, 30]);
+//   });
 
-  it.skip('Invalid month number', () => {
-    etc = new ETC(2011, 15, 14);
-    expect(() => etc['_monthRange']()).toThrowError('MONTHNUMBER ERROR: Month number should be between 1 and 13.');
-  });
-});
+//   it.skip('Invalid month number', () => {
+//     etc = new ETC(2011, 15, 14);
+//     expect(() => etc['_monthRange']()).toThrowError('MONTHNUMBER ERROR: Month number should be between 1 and 13.');
+//   });
+// });

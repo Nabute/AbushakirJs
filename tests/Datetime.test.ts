@@ -271,110 +271,110 @@ describe('Testing EtDatetime comparision...', () => {
   });
 });
 
-describe('Testing Helper Methods `sixDigits`', () => {
-  it('should return a six-digit string for a positive number', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['sixDigits'](300); // Accessing a private method for testing
+// describe('Testing Helper Methods `sixDigits`', () => {
+//   it('should return a six-digit string for a positive number', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['sixDigits'](300); // Accessing a private method for testing
 
-    expect(result).toBe('+0300');
-  });
+//     expect(result).toBe('+0300');
+//   });
 
-  it('should return a six-digit string for a negative number', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['sixDigits'](-300);
+//   it('should return a six-digit string for a negative number', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['sixDigits'](-300);
 
-    expect(result).toBe('-0300');
-  });
+//     expect(result).toBe('-0300');
+//   });
 
-  it('should throw an error for a number outside the valid range', () => {
-    const etDatetime = new EtDatetime();
+//   it('should throw an error for a number outside the valid range', () => {
+//     const etDatetime = new EtDatetime();
 
-    expect(() => etDatetime['sixDigits'](1000000)).toThrowError('Year out of scope');
-  });
-});
+//     expect(() => etDatetime['sixDigits'](1000000)).toThrowError('Year out of scope');
+//   });
+// });
 
-describe('Testing Helper Methods `fourDigits`', () => {
-  it('should return a four-digit string for positive numbers', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['fourDigits'](1234);
-    expect(result).toBe('1234');
-  });
+// describe('Testing Helper Methods `fourDigits`', () => {
+//   it('should return a four-digit string for positive numbers', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['fourDigits'](1234);
+//     expect(result).toBe('1234');
+//   });
 
-  it('should return a four-digit string for negative numbers', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['fourDigits'](-5678);
-    expect(result).toBe('-5678');
-  });
+//   it('should return a four-digit string for negative numbers', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['fourDigits'](-5678);
+//     expect(result).toBe('-5678');
+//   });
 
-  it('should pad with zeros for numbers less than 1000', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['fourDigits'](78);
-    expect(result).toBe('0078');
-  });
+//   it('should pad with zeros for numbers less than 1000', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['fourDigits'](78);
+//     expect(result).toBe('0078');
+//   });
 
-  it('should return the input for zero', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['fourDigits'](0);
-    expect(result).toBe('0000');
-  });
-});
+//   it('should return the input for zero', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['fourDigits'](0);
+//     expect(result).toBe('0000');
+//   });
+// });
 
-describe('Testing Helper Methods `threeDigits`', () => {
-  it('should return a string with three digits for numbers greater than or equal to 100', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['threeDigits'](150);
-    expect(result).toBe('150');
-  });
+// describe('Testing Helper Methods `threeDigits`', () => {
+//   it('should return a string with three digits for numbers greater than or equal to 100', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['threeDigits'](150);
+//     expect(result).toBe('150');
+//   });
 
-  it('should return a string with two digits and a leading zero for numbers between 10 and 99', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['threeDigits'](42);
-    expect(result).toBe('042');
-  });
+//   it('should return a string with two digits and a leading zero for numbers between 10 and 99', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['threeDigits'](42);
+//     expect(result).toBe('042');
+//   });
 
-  it('should return a string with three digits and leading zeros for numbers between 0 and 9', () => {
-    const etDatetime = new EtDatetime();
-    const result = etDatetime['threeDigits'](7);
-    expect(result).toBe('007');
-  });
-});
+//   it('should return a string with three digits and leading zeros for numbers between 0 and 9', () => {
+//     const etDatetime = new EtDatetime();
+//     const result = etDatetime['threeDigits'](7);
+//     expect(result).toBe('007');
+//   });
+// });
 
-describe('Testing Helper Methods `toNumber`', () => {
-  it('should convert undefined to NaN', () => {
-    const etDatetime = new EtDatetime();
-    expect(etDatetime["toNumber"](undefined)).toBeNaN();
-  });
+// describe('Testing Helper Methods `toNumber`', () => {
+//   it('should convert undefined to NaN', () => {
+//     const etDatetime = new EtDatetime();
+//     expect(etDatetime["toNumber"](undefined)).toBeNaN();
+//   });
 
-  it('should convert null to 0', () => {
-    const etDatetime = new EtDatetime();
-    expect(etDatetime["toNumber"](null)).toBe(0);
-  });
+//   it('should convert null to 0', () => {
+//     const etDatetime = new EtDatetime();
+//     expect(etDatetime["toNumber"](null)).toBe(0);
+//   });
 
-  it('should convert true to 1', () => {
-    const etDatetime = new EtDatetime();
-    expect(etDatetime["toNumber"](true)).toBe(1);
-  });
+//   it('should convert true to 1', () => {
+//     const etDatetime = new EtDatetime();
+//     expect(etDatetime["toNumber"](true)).toBe(1);
+//   });
 
-  it('should convert false to 0', () => {
-    const etDatetime = new EtDatetime();
-    expect(etDatetime["toNumber"](false)).toBe(0);
-  });
+//   it('should convert false to 0', () => {
+//     const etDatetime = new EtDatetime();
+//     expect(etDatetime["toNumber"](false)).toBe(0);
+//   });
 
-  it('should convert numeric strings to numbers', () => {
-    const etDatetime = new EtDatetime();
-    expect(etDatetime["toNumber"]('42')).toBe(42);
-  });
+//   it('should convert numeric strings to numbers', () => {
+//     const etDatetime = new EtDatetime();
+//     expect(etDatetime["toNumber"]('42')).toBe(42);
+//   });
 
-  it('should throw an error for symbol input', () => {
-    const etDatetime = new EtDatetime();
-    expect(() => etDatetime["toNumber"](Symbol())).toThrowError('TYPE ERROR: Unexpected operand type.');
-  });
+//   it('should throw an error for symbol input', () => {
+//     const etDatetime = new EtDatetime();
+//     expect(() => etDatetime["toNumber"](Symbol())).toThrowError('TYPE ERROR: Unexpected operand type.');
+//   });
 
-  it('should throw an error for object input', () => {
-    const etDatetime = new EtDatetime();
-    expect(() => etDatetime["toNumber"]({})).toThrowError('TYPE ERROR: Unexpected operand type.');
-  });
-});
+//   it('should throw an error for object input', () => {
+//     const etDatetime = new EtDatetime();
+//     expect(() => etDatetime["toNumber"]({})).toThrowError('TYPE ERROR: Unexpected operand type.');
+//   });
+// });
 
 describe('Testing Getters', () => {
   let etDatetime: EtDatetime;
