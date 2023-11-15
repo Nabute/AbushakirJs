@@ -1,11 +1,10 @@
 {
   "name": "abushakir",
-  "version": "1.2.1",
+  "version": "1.4.0",
   "description": "Ethiopian Datetime and Calendar Reckoning system. COMPUTUS.",
   "main": "lib/index.js",
-  "type": "lib/index.d.ts",
   "scripts": {
-    "test": "jest --config jestconfig.json",
+    "test": "jest --coverage",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
@@ -13,7 +12,9 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "prerelease": "npm run release -- --prerelease",
+    "release": "standard-version"
   },
   "files": [
     "lib/**/*"
@@ -50,6 +51,7 @@
     "@types/jest": "^25.2.1",
     "jest": "^25.5.4",
     "prettier": "^2.0.5",
+    "standard-version": "^9.5.0",
     "ts-jest": "^25.4.0",
     "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.18.0",

@@ -2,12 +2,20 @@
 // Use of this source code is governed by MIT license, which can be found
 // in the LICENSE file.
 
+/**
+ * EtDatetime class represents a date and time in the Ethiopian calendar.
+ *
+ * @remarks
+ * This class provides methods to manipulate and format Ethiopian dates.
+ *
+ * @license MIT
+ */
+
 import Datetime from '../Interfaces/EDT';
 import { constants } from '../utils/constants';
 import Duration from '../utils/duration';
 
 class EtDatetime implements Datetime {
-  // Fields
   moment!: number;
   fixed!: number;
 
@@ -23,7 +31,7 @@ class EtDatetime implements Datetime {
         this.toNumber(args[5]),
         this.toNumber(args[6]),
       );
-      if (this.fixed === null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+      if (this.fixed === null) throw new Error('ARGUMENT ERROR: Unacceptable argument.');
     }
 
     if (args.length === 1) {
@@ -33,36 +41,35 @@ class EtDatetime implements Datetime {
       } else {
         this.fixed = this.fixedFromEthiopic(value, 1, 1);
         this.moment = this.dateToEpoch(value, 1, 1, 0, 0, 0, 0);
-        if (this.fixed === null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+        if (this.fixed === null) throw new Error('ARGUMENT ERROR: Unacceptable argument.');
       }
     }
     if (args.length === 0) {
       this.fixed = this.fixedFromUnix(Date.now());
       this.moment = Date.now();
     }
+
+    if (!this.fixed) {
+      this.fixed = 0;
+    }
   }
 
-  fromMillisecondsSinceEpoch(millisecondsSinceEpoch: number) {
+  fromMillisecondsSinceEpoch(millisecondsSinceEpoch: number): void {
     this.moment = millisecondsSinceEpoch;
     this.fixed = this.fixedFromUnix(millisecondsSinceEpoch);
-    if (this.fixed === null) throw new Error('ARGUMENT ERROR:unacceptable argument.');
+    if (this.fixed === null) throw new Error('ARGUMENT ERROR: Unacceptable argument.');
     if (
       Math.abs(millisecondsSinceEpoch) > constants.maxMillisecondsSinceEpoch ||
       Math.abs(millisecondsSinceEpoch) === constants.maxMillisecondsSinceEpoch
     )
-      throw new Error(`Calendar out side valid range ${constants.maxMillisecondsSinceEpoch}`);
+      throw new Error(`Calendar outside valid range ${constants.maxMillisecondsSinceEpoch}`);
   }
 
-  now() {
+  now(): void {
     this.fixed = this.fixedFromUnix(Date.now());
     this.moment = Date.now();
   }
 
-  // parse(formattedString: string): EtDatetime{
-
-  // }
-
-  // Getters
   public get year(): number {
     return Math.floor((4 * (this.fixed - constants._ethiopicEpoch) + 1463) / 1461);
   }
@@ -119,7 +126,6 @@ class EtDatetime implements Datetime {
     return { h: this.hour, m: this.minute, s: this.second };
   }
 
-  // Methods
   toString(): string {
     const y: string = this.fourDigits(this.year);
     const m: string = this.twoDigits(this.month);
@@ -130,6 +136,7 @@ class EtDatetime implements Datetime {
     const ms: string = this.threeDigits(this.millisecond);
     return `${y}-${m}-${d} ${h}:${min}:${sec}.${ms}`;
   }
+
   toJson(): object {
     return {
       year: this.fourDigits(this.year),
@@ -183,7 +190,6 @@ class EtDatetime implements Datetime {
     return new Duration(Math.abs(this.fixed - other.fixed), 0, 0, 0, 0, 0);
   }
 
-  // Private methods
   private fixedFromEthiopic(year: number, month: number, day: number): number {
     return Math.floor(constants._ethiopicEpoch - 1 + 365 * (year - 1) + year / 4 + 30 * (month - 1) + day);
   }
@@ -203,10 +209,10 @@ class EtDatetime implements Datetime {
   ): number {
     return (
       (this.fixedFromEthiopic(year, month, date) - constants._unixEpoch) * constants.dayMilliSec +
-      hour * constants.hourMilliSec +
-      minute * constants.minMilliSec +
-      second * constants.secMilliSec +
-      millisecond
+      (hour ? hour * constants.hourMilliSec : 0) +
+      (minute ? minute * constants.minMilliSec : 0) +
+      (second ? second * constants.secMilliSec : 0) +
+      (millisecond ? millisecond : 0)
     );
   }
 
@@ -240,16 +246,14 @@ class EtDatetime implements Datetime {
   }
 
   private twoDigits(n: number): string {
-    if (n >= 10) return `${n}`;
-    return `0${n}`;
+    return n >= 10 ? `${n}` : `0${n}`;
   }
 
   private toNumber(value: any): number {
     if (value === undefined) return NaN;
     if (value === null) return 0;
     if (typeof value === 'boolean') {
-      if (value) return 1;
-      else return 0;
+      return value ? 1 : 0;
     }
     if (typeof value === 'string') return parseInt(value, 10);
     if (typeof value === 'symbol') throw new Error('TYPE ERROR: Unexpected operand type.');

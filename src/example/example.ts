@@ -62,29 +62,32 @@ const allFastings = bh.allAtswamat; // => List of All fasting and Movable holida
 
 const testNums: number[] = [1, 10, 15, 20, 25, 78, 105, 333, 450, 600, 1000, 1001, 1010, 1056, 1200, 2013, 9999, 10000];
 
-for (const num of testNums) {
-  console.log(ConvertToEthiopic(num)); // [፩, ፲, ፲፭, ፳, ፳፭, ፸፰, ፻፭, ፫፻፴፫, ፬፻፶, ፮፻, ፲፻, ፲፻፩, ፲፻፲, ፲፻፶፮, ፲፪፻, ፳፻፲፫, ፺፱፻፺፱, ፻፻]
-}
+// for (const num of testNums) {
+//   console.log(ConvertToEthiopic(num)); // [፩, ፲, ፲፭, ፳, ፳፭, ፸፰, ፻፭, ፫፻፴፫, ፬፻፶, ፮፻, ፲፻, ፲፻፩, ፲፻፲, ፲፻፶፮, ፲፪፻, ፳፻፲፫, ፺፱፻፺፱, ፻፻]
+// }
 
 /*
-  * Conversion from any calendar (for instance, from Gregorian) into Ethiopian Calendar.
-  */
+ * Conversion from any calendar (for instance, from Gregorian) into Ethiopian Calendar.
+ */
 const gregorian1: number = Date.now();
 const ethiopian1: EtDatetime = new EtDatetime(gregorian1);
 
-console.log(`Gregorian := ${new Date(gregorian1).toISOString()} is equivalent to Ethiopian ${ethiopian1.toIso8601String()}`);
+// console.log(
+//   `Gregorian := ${new Date(gregorian1).toISOString()} is equivalent to Ethiopian ${ethiopian1.toIso8601String()}`,
+// );
 // Gregorian := 2020-09-22T22:43:33.077Z is equivalent to Ethiopian 2013-01-12T22:43:33.077
 
-
 /*
-* Conversion from Ethiopian Calendar into any calendar (for instance, to Gregorian).
-*/
+ * Conversion from Ethiopian Calendar into any calendar (for instance, to Gregorian).
+ */
 const ethiopian: EtDatetime = new EtDatetime();
 const gregorian: Date = new Date(ethiopian.moment);
 
-console.log(`Ethiopian ${ethiopian.toIso8601String()} is equivalent to Gregorian := ${gregorian.toISOString()}`);
+// console.log(`Ethiopian ${ethiopian.toIso8601String()} is equivalent to Gregorian := ${gregorian.toISOString()}`);
 // Ethiopian 2013-01-12T22:43:33.078 is equivalent to Gregorian := 2020-09-22T22:43:33.078Z
 
-console.log(`Ethiopian EPOCH := ${ethiopian.moment}`); // Ethiopian EPOCH := 1600814613078
-console.log(`Gregorian EPOCH := ${gregorian.valueOf()}`); // Gregorian EPOCH := 1600814613078
+// console.log(`Ethiopian EPOCH := ${ethiopian.moment}`); // Ethiopian EPOCH := 1600814613078
+// console.log(`Gregorian EPOCH := ${gregorian.valueOf()}`); // Gregorian EPOCH := 1600814613078
 
+const date = new EtDatetime(2013, 1, 11);
+// console.log(date);
