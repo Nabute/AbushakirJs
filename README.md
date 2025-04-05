@@ -125,7 +125,7 @@ console.log(`Gregorian EPOCH := ${gregorian.valueOf()}`); // Gregorian EPOCH := 
 
 ## Contact
 
-If you want to contact me you can reach me at [daniel@ibrave.dev](mailto:daniel@ibrave.dev).
+If you want to contact me you can reach me at [nabute925@gmail.com](mailto:nabute925@gmail.com).
 
 ## License
 
