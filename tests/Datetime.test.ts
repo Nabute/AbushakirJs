@@ -115,7 +115,7 @@ describe('Parameterized Constructors (UNIX EPOCH or time stamp)...', () => {
   const someyear: EtDatetime = new EtDatetime(1585731446021);
 
   it('Testing toString() on Parameterized Constructor', () => {
-    expect(someyear.toString()).toBe('2012-07-23 08:57:26.021');
+    expect(someyear.toString()).toBe('2012-07-23T08:57:26.021');
   });
 
   it('Testing Year on Parameterized Constructor', () => {
@@ -183,7 +183,7 @@ describe('Parameterized Constructors (Full argument)...', () => {
   });
 
   it('Testing ToString method on Parameterized Constructor', () => {
-    expect(someyear.toString()).toMatch('2012-07-07 15:12:17.500');
+    expect(someyear.toString()).toMatch('2012-07-07T15:12:17.500');
   });
 
   it('Testing ToString method on Parameterized Constructor', () => {
@@ -259,11 +259,11 @@ describe('Testing EtDatetime comparision...', () => {
   });
 
   it('Testing EtDatetime method "add"...', () => {
-    expect(now.add(hourDifference).toString()).toMatch('2012-07-25 08:57:26.021');
+    expect(now.add(hourDifference).toString()).toMatch('2012-07-25T08:57:26.021');
   });
 
   it('Testing EtDatetime method "subtract"...', () => {
-    expect(hourLater.subtract(hourDifference).toString()).toMatch('2012-07-23 08:57:26.021');
+    expect(hourLater.subtract(hourDifference).toString()).toMatch('2012-07-23T08:57:26.021');
   });
 
   it('Testing EtDatetime method "difference"...', () => {
@@ -414,5 +414,95 @@ describe('Testing Helper Methods `monthGeez`', () => {
     const result = ethiopianDate.monthGeez;
 
     expect(typeof result).toBe('string');
+  });
+});
+
+describe('EtDatetime ECMA compatibility', () => {
+  const date = new EtDatetime(2016, 3, 15, 14, 30, 45, 123);
+
+  it('coerces to string using toStringTag', () => {
+    expect(Object.prototype.toString.call(date)).toBe('[object EtDatetime]');
+  });
+
+  it('coerces to primitive string', () => {
+    console.log(`${date}`, date.toString());
+    expect(`${date}`).toBe(date.toISOString());
+  });
+
+  it('coerces to primitive number', () => {
+    expect(+date).toBe(date.getTime());
+  });
+
+  it('JSON.stringify uses toJSON()', () => {
+    const json = JSON.stringify({ d: date });
+    expect(json).toBe(`{"d":"${date.toISOString()}"}`);
+  });
+
+  it('getTime returns correct epoch', () => {
+    expect(date.getTime()).toBe(date.valueOf());
+  });
+
+  it('toDate returns native Date', () => {
+    const native = date.toDate();
+    expect(native instanceof Date).toBe(true);
+    expect(native.getTime()).toBe(date.getTime());
+  });
+});
+
+describe('EtDatetime get methods', () => {
+  const et = new EtDatetime(2016, 2, 13, 11, 59, 58, 321); // 2016-02-13 11:59:58.321
+
+  it('getFullYear returns year', () => {
+    expect(et.getFullYear()).toBe(2016);
+  });
+
+  it('getMonth returns zero-based month', () => {
+    expect(et.getMonth()).toBe(1); // month 2 in EtDatetime
+  });
+
+  it('getDate returns day of month', () => {
+    expect(et.getDate()).toBe(13);
+  });
+
+  it('getHours returns hour', () => {
+    expect(et.getHours()).toBe(11);
+  });
+
+  it('getMinutes returns minutes', () => {
+    expect(et.getMinutes()).toBe(59);
+  });
+
+  it('getSeconds returns seconds', () => {
+    expect(et.getSeconds()).toBe(58);
+  });
+
+  it('getMilliseconds returns ms', () => {
+    expect(et.getMilliseconds()).toBe(321);
+  });
+});
+
+
+describe('Symbol.toPrimitive compliance', () => {
+  const et = new EtDatetime(2015, 1, 1);
+
+  it('works in number coercion', () => {
+    expect(Number(et)).toBe(et.getTime());
+  });
+
+  it('works in string coercion', () => {
+    expect(String(et)).toBe(et.toISOString());
+  });
+
+  it('works in addition with string', () => {
+    expect(`Et: ${et}`).toBe(`Et: ${et.toISOString()}`);
+  });
+});
+
+
+describe('EtDatetime static methods', () => {
+  it('EtDatetime.now returns current time instance', () => {
+    const now = EtDatetime.now();
+    expect(now).toBeInstanceOf(EtDatetime);
+    expect(now.getTime()).toBeCloseTo(Date.now(), -2); // ~10ms precision
   });
 });
