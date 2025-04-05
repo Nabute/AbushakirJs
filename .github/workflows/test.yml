@@ -1,0 +1,48 @@
+name: Run Tests and Coverage
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x, 20.x]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    name: Test on Node.js ${{ matrix.node-version }}
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup Node.js version from matrix
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run tests and collect coverage
+      - name: Run tests with coverage
+        run: npm run test -- --coverage
+
+      # Upload coverage report only on one version
+      - name: Upload coverage report
+        if: matrix.node-version == '18.x'
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/
