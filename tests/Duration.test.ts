@@ -120,8 +120,7 @@ describe('Duration', () => {
     const d = new Duration({ hours: 1, minutes: 1, seconds: 1, microseconds: 123456 });
 
     it('toString returns formatted string', () => {
-        const d = new Duration({ hours: 1, minutes: 3, seconds: 4, microseconds: 456 });
-        expect(d.toString()).toBe('01:03:04.000456');
+        expect(new Duration({ hours: 1, minutes: 3, seconds: 4, microseconds: 456 }).toString()).toBe('01:03:04.000456');
     });      
 
     it('toJSON returns same as toString', () => {
