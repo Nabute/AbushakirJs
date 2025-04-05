@@ -50,8 +50,7 @@ class Duration {
    * 
    * @param args Either a DurationNamedParams object or a list of numbers
    */
-  constructor(params: DurationNamedParams);
-  constructor(microseconds: number);
+  constructor(paramsOrMicroseconds: DurationNamedParams | number);
   constructor(...positional: number[]);
   constructor(...args: any[]) {
     if (args.length === 1 && typeof args[0] === 'object' && !Array.isArray(args[0])) {

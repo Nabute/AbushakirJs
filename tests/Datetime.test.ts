@@ -425,7 +425,6 @@ describe('EtDatetime ECMA compatibility', () => {
   });
 
   it('coerces to primitive string', () => {
-    console.log(`${date}`, date.toString());
     expect(`${date}`).toBe(date.toISOString());
   });
 
