@@ -47,7 +47,7 @@ class Duration {
    * Accepts either:
    * - A single object with named time units: `{ hours: 1, minutes: 30 }`, or
    * - A list of up to 6 numbers in the order: days, hours, minutes, seconds, milliseconds, microseconds.
-   * 
+   *
    * @param args Either a DurationNamedParams object or a list of numbers
    */
   constructor(paramsOrMicroseconds: DurationNamedParams | number);
@@ -73,19 +73,12 @@ class Duration {
 
   /**
    * Computes the total microseconds from a list of positional arguments.
-   * 
+   *
    * @param args Array of positional arguments [days, hours, minutes, seconds, milliseconds, microseconds]
    * @returns Total duration in microseconds
    */
   private computeDuration(args: any[]): number {
-    const [
-      days = 0,
-      hours = 0,
-      minutes = 0,
-      seconds = 0,
-      milliseconds = 0,
-      microseconds = 0
-    ] = args;
+    const [days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0, microseconds = 0] = args;
 
     return (
       Duration.MICROSECONDS_PER_DAY * this.toNumber(days) +
@@ -110,19 +103,12 @@ class Duration {
 
   /**
    * Computes the total microseconds from a named parameters object.
-   * 
+   *
    * @param params Object with named time values
    * @returns Total duration in microseconds
    */
   private computeFromNamedParams(params: DurationNamedParams): number {
-    const {
-      days = 0,
-      hours = 0,
-      minutes = 0,
-      seconds = 0,
-      milliseconds = 0,
-      microseconds = 0,
-    } = params;
+    const { days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0, microseconds = 0 } = params;
 
     return (
       days * Duration.MICROSECONDS_PER_DAY +
@@ -248,12 +234,14 @@ class Duration {
 
     const sign = this.isNegative ? '-' : '';
 
-    return `${sign}${this.twoDigits(hours)}:${this.twoDigits(minutes)}:${this.twoDigits(seconds)}.${this.sixDigits(microseconds)}`;
+    return `${sign}${this.twoDigits(hours)}:${this.twoDigits(minutes)}:${this.twoDigits(seconds)}.${this.sixDigits(
+      microseconds,
+    )}`;
   }
 
   /**
    * Pads a number with leading zeros to ensure 6 digits.
-   * 
+   *
    * @param n Microseconds
    */
   private sixDigits(n: number): string {
@@ -262,7 +250,7 @@ class Duration {
 
   /**
    * Pads a number with leading zeros to ensure 2 digits.
-   * 
+   *
    * @param n Number to format
    */
   private twoDigits(n: number): string {

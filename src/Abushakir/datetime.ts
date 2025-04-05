@@ -33,7 +33,7 @@ class EtDatetime implements Datetime {
 
   /**
    * Constructs an EtDatetime instance.
-   * 
+   *
    * @param args Either:
    *  - No arguments → initializes to current time
    *  - One number → milliseconds since Unix epoch OR Ethiopic year
@@ -77,16 +77,14 @@ class EtDatetime implements Datetime {
 
   /**
    * Sets the current datetime using a Unix timestamp in milliseconds.
-   * 
+   *
    * @param millisecondsSinceEpoch Timestamp in milliseconds since the Unix epoch
    */
   fromMillisecondsSinceEpoch(millisecondsSinceEpoch: number): void {
     this.moment = millisecondsSinceEpoch;
     this.fixed = this.fixedFromUnix(millisecondsSinceEpoch);
     if (this.fixed === null) throw new Error('ARGUMENT ERROR: Unacceptable argument.');
-    if (
-      Math.abs(millisecondsSinceEpoch) >= constants.maxMillisecondsSinceEpoch
-    )
+    if (Math.abs(millisecondsSinceEpoch) >= constants.maxMillisecondsSinceEpoch)
       throw new Error(`Calendar outside valid range ${constants.maxMillisecondsSinceEpoch}`);
   }
 
@@ -340,8 +338,7 @@ class EtDatetime implements Datetime {
     if (value === null) return 0;
     if (typeof value === 'boolean') return value ? 1 : 0;
     if (typeof value === 'string') return parseInt(value, 10);
-    if (typeof value === 'symbol' || typeof value === 'object')
-      throw new Error('TYPE ERROR: Unexpected operand type.');
+    if (typeof value === 'symbol' || typeof value === 'object') throw new Error('TYPE ERROR: Unexpected operand type.');
     return value;
   }
 
