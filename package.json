@@ -1,9 +1,9 @@
 {
   "name": "abushakir",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Ethiopian Datetime and Calendar Reckoning system. COMPUTUS.",
   "main": "lib/src/index.js",
-  "types": "lib/src/index.d.ts", 
+  "types": "lib/src/index.d.ts",
   "scripts": {
     "test": "jest --coverage",
     "build": "tsc",
