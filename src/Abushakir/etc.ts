@@ -156,7 +156,7 @@ export default class ETC implements Calendar {
   }
 
   private _monthRange(): number[] {
-    if (this._date.month <= 1 || this._date.month >= 13) {
+    if (this._date.month < 1 || this._date.month > 13) {
       throw new Error('MONTHNUMBER ERROR: Month number should be between 1 and 13.');
     }
     return [this._date.weekday, this._date.month === 13 ? (this._date.isLeap ? 6 : 5) : 30];
