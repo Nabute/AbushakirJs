@@ -14,12 +14,12 @@ import { EtDatetime, ETC, BahireHasab, ConvertToEthiopic } from '..';
 const now: EtDatetime = new EtDatetime(); // => 2012-07-28 17:18:31.466
 const nowDate = now.date; // => {year: 2012, month: 7, day: 28}
 const nowTIme = now.time; // => {h: 17, m: 18, s: 31}
-console.log("🚀 ~ nowTIme:", nowTIme, now.toISOString())
+// console.log("🚀 ~ nowTIme:", nowTIme, now.toISOString())
 
 const covidFirstConfirmed: EtDatetime = new EtDatetime(2012, 7, 4);
-console.log("🚀 ~ covidFirstConfirmed:", covidFirstConfirmed)
+// console.log("🚀 ~ covidFirstConfirmed:", covidFirstConfirmed)
 const covidFirstConfirmedEpoch: EtDatetime = new EtDatetime(covidFirstConfirmed.moment);
-console.log("🚀 ~ covidFirstConfirmedEpoch:", covidFirstConfirmedEpoch)
+// console.log("🚀 ~ covidFirstConfirmedEpoch:", covidFirstConfirmedEpoch)
 
 // let covidFirstDeath: EtDatetime = EtDatetime.parse("2012-07-26 23:00:00");
 
