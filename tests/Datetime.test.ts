@@ -414,8 +414,8 @@ describe('Formatting: fourDigits()', () => {
   testCases.forEach(({ year, expected }) => {
     it(`formats year ${year} as ${expected} in toJson().year`, () => {
       const date = new EtDatetime(year, 1, 1);
-      //@ts-ignore
-      expect((date.toJson())['year']).toBe(expected);
+      // @ts-ignore
+      expect(date.toJson().year).toBe(expected);
     });
   });
 });
@@ -484,7 +484,6 @@ describe('EtDatetime ECMAScript API compliance', () => {
     });
 
     it('getUTCMonth returns the UTC month (0-indexed)', () => {
-      const et = new EtDatetime(2012, 2, 13, 14, 30, 45, 123);
       expect(et.getUTCMonth()).toBe(new Date(et.getTime()).getUTCMonth());
     });    
 

@@ -181,9 +181,9 @@ declare class EtDatetime implements Datetime {
      */
     toDate(): Date;
     /**
-   * Returns the day of the week (0–6), where 0 is Sunday and 6 is Saturday.
-   * Equivalent to JavaScript Date.prototype.getDay().
-   */
+     * Returns the day of the week (0–6), where 0 is Sunday and 6 is Saturday.
+     * Equivalent to JavaScript Date.prototype.getDay().
+     */
     getDay(): number;
     /**
      * Returns the day of the month (1–31) in UTC.
@@ -231,10 +231,10 @@ declare class EtDatetime implements Datetime {
      */
     getYear(): number;
     /**
-   * Sets the year (offset from 1900), used for legacy JavaScript compatibility.
-   * Equivalent to Date.prototype.setYear().
-   * @param year A number representing the year minus 1900
-   */
+     * Sets the year (offset from 1900), used for legacy JavaScript compatibility.
+     * Equivalent to Date.prototype.setYear().
+     * @param year A number representing the year minus 1900
+     */
     setYear(year: number): void;
     /**
      * Sets the day of the month (1–30 for Ethiopian calendar).
@@ -312,21 +312,21 @@ declare class EtDatetime implements Datetime {
      */
     setUTCMonth(month: number): void;
     /**
-   * Updates internal `fixed` and `moment` values from full date-time components.
-   *
-   * @param year Ethiopian year
-   * @param month Ethiopian month (1–13)
-   * @param day Ethiopian day of month (1–30)
-   * @param hour Hour (0–23)
-   * @param minute Minute (0–59)
-   * @param second Second (0–59)
-   * @param millisecond Millisecond (0–999)
-   */
+     * Updates internal `fixed` and `moment` values from full date-time components.
+     *
+     * @param year Ethiopian year
+     * @param month Ethiopian month (1–13)
+     * @param day Ethiopian day of month (1–30)
+     * @param hour Hour (0–23)
+     * @param minute Minute (0–59)
+     * @param second Second (0–59)
+     * @param millisecond Millisecond (0–999)
+     */
     private _updateFromComponents;
     /**
-   * Returns a human-readable date string using system locale.
-   * Equivalent to Date.prototype.toDateString().
-   */
+     * Returns a human-readable date string using system locale.
+     * Equivalent to Date.prototype.toDateString().
+     */
     toDateString(): string;
     /**
      * Returns a human-readable time string using system locale.

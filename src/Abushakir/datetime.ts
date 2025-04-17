@@ -431,9 +431,9 @@ class EtDatetime implements Datetime {
   }
 
   /**
- * Returns the day of the week (0–6), where 0 is Sunday and 6 is Saturday.
- * Equivalent to JavaScript Date.prototype.getDay().
- */
+   * Returns the day of the week (0–6), where 0 is Sunday and 6 is Saturday.
+   * Equivalent to JavaScript Date.prototype.getDay().
+   */
   getDay(): number {
     return this.weekday;
   }
@@ -512,10 +512,10 @@ class EtDatetime implements Datetime {
 
 
   /**
- * Sets the year (offset from 1900), used for legacy JavaScript compatibility.
- * Equivalent to Date.prototype.setYear().
- * @param year A number representing the year minus 1900
- */
+   * Sets the year (offset from 1900), used for legacy JavaScript compatibility.
+   * Equivalent to Date.prototype.setYear().
+   * @param year A number representing the year minus 1900
+   */
   setYear(year: number): void {
     this.setFullYear(year + 1900);
   }
@@ -656,16 +656,16 @@ class EtDatetime implements Datetime {
   }
 
   /**
- * Updates internal `fixed` and `moment` values from full date-time components.
- *
- * @param year Ethiopian year
- * @param month Ethiopian month (1–13)
- * @param day Ethiopian day of month (1–30)
- * @param hour Hour (0–23)
- * @param minute Minute (0–59)
- * @param second Second (0–59)
- * @param millisecond Millisecond (0–999)
- */
+   * Updates internal `fixed` and `moment` values from full date-time components.
+   *
+   * @param year Ethiopian year
+   * @param month Ethiopian month (1–13)
+   * @param day Ethiopian day of month (1–30)
+   * @param hour Hour (0–23)
+   * @param minute Minute (0–59)
+   * @param second Second (0–59)
+   * @param millisecond Millisecond (0–999)
+   */
   private _updateFromComponents(
     year: number,
     month: number,
@@ -679,12 +679,10 @@ class EtDatetime implements Datetime {
     this.moment = this.dateToEpoch(year, month, day, hour, minute, second, millisecond);
   }
 
-
-  // Formatters
   /**
- * Returns a human-readable date string using system locale.
- * Equivalent to Date.prototype.toDateString().
- */
+   * Returns a human-readable date string using system locale.
+   * Equivalent to Date.prototype.toDateString().
+   */
   toDateString(): string {
     return this.toDate().toDateString();
   }
