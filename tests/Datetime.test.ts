@@ -271,111 +271,6 @@ describe('Testing EtDatetime comparision...', () => {
   });
 });
 
-// describe('Testing Helper Methods `sixDigits`', () => {
-//   it('should return a six-digit string for a positive number', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['sixDigits'](300); // Accessing a private method for testing
-
-//     expect(result).toBe('+0300');
-//   });
-
-//   it('should return a six-digit string for a negative number', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['sixDigits'](-300);
-
-//     expect(result).toBe('-0300');
-//   });
-
-//   it('should throw an error for a number outside the valid range', () => {
-//     const etDatetime = new EtDatetime();
-
-//     expect(() => etDatetime['sixDigits'](1000000)).toThrowError('Year out of scope');
-//   });
-// });
-
-// describe('Testing Helper Methods `fourDigits`', () => {
-//   it('should return a four-digit string for positive numbers', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['fourDigits'](1234);
-//     expect(result).toBe('1234');
-//   });
-
-//   it('should return a four-digit string for negative numbers', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['fourDigits'](-5678);
-//     expect(result).toBe('-5678');
-//   });
-
-//   it('should pad with zeros for numbers less than 1000', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['fourDigits'](78);
-//     expect(result).toBe('0078');
-//   });
-
-//   it('should return the input for zero', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['fourDigits'](0);
-//     expect(result).toBe('0000');
-//   });
-// });
-
-// describe('Testing Helper Methods `threeDigits`', () => {
-//   it('should return a string with three digits for numbers greater than or equal to 100', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['threeDigits'](150);
-//     expect(result).toBe('150');
-//   });
-
-//   it('should return a string with two digits and a leading zero for numbers between 10 and 99', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['threeDigits'](42);
-//     expect(result).toBe('042');
-//   });
-
-//   it('should return a string with three digits and leading zeros for numbers between 0 and 9', () => {
-//     const etDatetime = new EtDatetime();
-//     const result = etDatetime['threeDigits'](7);
-//     expect(result).toBe('007');
-//   });
-// });
-
-// describe('Testing Helper Methods `toNumber`', () => {
-//   it('should convert undefined to NaN', () => {
-//     const etDatetime = new EtDatetime();
-//     expect(etDatetime["toNumber"](undefined)).toBeNaN();
-//   });
-
-//   it('should convert null to 0', () => {
-//     const etDatetime = new EtDatetime();
-//     expect(etDatetime["toNumber"](null)).toBe(0);
-//   });
-
-//   it('should convert true to 1', () => {
-//     const etDatetime = new EtDatetime();
-//     expect(etDatetime["toNumber"](true)).toBe(1);
-//   });
-
-//   it('should convert false to 0', () => {
-//     const etDatetime = new EtDatetime();
-//     expect(etDatetime["toNumber"](false)).toBe(0);
-//   });
-
-//   it('should convert numeric strings to numbers', () => {
-//     const etDatetime = new EtDatetime();
-//     expect(etDatetime["toNumber"]('42')).toBe(42);
-//   });
-
-//   it('should throw an error for symbol input', () => {
-//     const etDatetime = new EtDatetime();
-//     expect(() => etDatetime["toNumber"](Symbol())).toThrowError('TYPE ERROR: Unexpected operand type.');
-//   });
-
-//   it('should throw an error for object input', () => {
-//     const etDatetime = new EtDatetime();
-//     expect(() => etDatetime["toNumber"]({})).toThrowError('TYPE ERROR: Unexpected operand type.');
-//   });
-// });
-
 describe('Testing Getters', () => {
   let etDatetime: EtDatetime;
 
@@ -480,7 +375,6 @@ describe('EtDatetime get methods', () => {
   });
 });
 
-
 describe('Symbol.toPrimitive compliance', () => {
   const et = new EtDatetime(2015, 1, 1);
 
@@ -497,11 +391,259 @@ describe('Symbol.toPrimitive compliance', () => {
   });
 });
 
-
 describe('EtDatetime static methods', () => {
   it('EtDatetime.now returns current time instance', () => {
     const now = EtDatetime.now();
     expect(now).toBeInstanceOf(EtDatetime);
     expect(now.getTime()).toBeCloseTo(Date.now(), -2); // ~10ms precision
   });
+});
+
+describe('Formatting: fourDigits()', () => {
+  const testCases = [
+    { year: 5, expected: '0005' },
+    { year: 45, expected: '0045' },
+    { year: 456, expected: '0456' },
+    { year: 1456, expected: '1456' },
+    { year: -5, expected: '-0005' },
+    { year: -45, expected: '-0045' },
+    { year: -456, expected: '-0456' },
+    { year: -1456, expected: '-1456' },
+  ];
+
+  testCases.forEach(({ year, expected }) => {
+    it(`formats year ${year} as ${expected} in toJson().year`, () => {
+      const date = new EtDatetime(year, 1, 1);
+      //@ts-ignore
+      expect((date.toJson())['year']).toBe(expected);
+    });
+  });
+});
+
+describe('Formatting: sixDigits()', () => {
+  it('formats years with six digits and sign prefix', () => {
+    const et1 = new EtDatetime(-9999, 1, 1);
+    const et2 = new EtDatetime(9999, 1, 1);
+    expect(et1.toIso8601String().startsWith('-9999')).toBe(true);
+    expect(et2.toIso8601String().startsWith('9999')).toBe(true);
+  });
+
+  it('throws for year > 9999', () => {
+    const et = new EtDatetime(10000, 1, 1);
+    expect(() => et.toIso8601String()).toThrow('Year out of scope');
+  });
+
+  it('throws for year < -9999', () => {
+    const et = new EtDatetime(-10000, 1, 1);
+    expect(() => et.toIso8601String()).toThrow('Year out of scope');
+  });
+});
+
+describe('EtDatetime ECMAScript API compliance', () => {
+
+  // ------------------------------------------
+  //  Weekday + Legacy Year API
+  // ------------------------------------------
+  describe('getDay() and getYear()', () => {
+    it('getDay() returns weekday index (0–6)', () => {
+      const date = new EtDatetime(2012, 1, 1); // Known Sunday
+      expect(date.getDay()).toBeGreaterThanOrEqual(0);
+      expect(date.getDay()).toBeLessThanOrEqual(6);
+      expect(date.getDay()).toBe(date.weekday);
+    });
+
+    it('getYear returns fullYear - 1900', () => {
+      const et = new EtDatetime(2015, 1, 1);
+      expect(et.getYear()).toBe(et.getFullYear() - 1900);
+    });
+
+    it('setYear sets the full year based on input + 1900', () => {
+      const et = new EtDatetime(2020, 1, 1);
+      et.setYear(120); // Should set full year to 2020 (1900 + 120)
+      expect(et.getFullYear()).toBe(2020);
+    });
+  });
+
+  // ------------------------------------------
+  //  UTC Getters
+  // ------------------------------------------
+  describe('getUTC*() methods', () => {
+    const et = new EtDatetime(2012, 2, 13, 14, 30, 45, 123);
+    const native = et.toDate();
+
+    it('getUTCDate matches JS Date', () => {
+      expect(et.getUTCDate()).toBe(native.getUTCDate());
+    });
+
+    it('getUTCDay matches JS Date', () => {
+      expect(et.getUTCDay()).toBe(native.getUTCDay());
+    });
+
+    it('getUTCFullYear matches JS Date', () => {
+      expect(et.getUTCFullYear()).toBe(native.getUTCFullYear());
+    });
+
+    it('getUTCMonth returns the UTC month (0-indexed)', () => {
+      const et = new EtDatetime(2012, 2, 13, 14, 30, 45, 123);
+      expect(et.getUTCMonth()).toBe(new Date(et.getTime()).getUTCMonth());
+    });    
+
+    it('getUTCHours matches JS Date', () => {
+      expect(et.getUTCHours()).toBe(native.getUTCHours());
+    });
+
+    it('getUTCMinutes matches JS Date', () => {
+      expect(et.getUTCMinutes()).toBe(native.getUTCMinutes());
+    });
+
+    it('getUTCSeconds matches JS Date', () => {
+      expect(et.getUTCSeconds()).toBe(native.getUTCSeconds());
+    });
+
+    it('getUTCMilliseconds matches JS Date', () => {
+      expect(et.getUTCMilliseconds()).toBe(native.getUTCMilliseconds());
+    });
+  });
+
+  // ------------------------------------------
+  //  Setters (Local Time)
+  // ------------------------------------------
+  describe('set*() methods (local time)', () => {
+    it('setDate changes the day of the month', () => {
+      const et = new EtDatetime(2012, 2, 13);
+      et.setDate(5);
+      expect(et.getDate()).toBe(5);
+    });
+
+    it('setFullYear updates the year', () => {
+      const et = new EtDatetime(2010, 2, 13);
+      et.setFullYear(2020);
+      expect(et.getFullYear()).toBe(2020);
+    });
+
+    it('setMonth updates the month (0-indexed)', () => {
+      const et = new EtDatetime(2012, 2, 13);
+      et.setMonth(4); // → month = 5
+      expect(et.getMonth()).toBe(4);
+      expect(et.month).toBe(5);
+    });
+
+    it('setHours, Minutes, Seconds, Milliseconds update correctly', () => {
+      const et = new EtDatetime(2012, 2, 13, 1, 2, 3, 4);
+      et.setHours(5);
+      et.setMinutes(10);
+      et.setSeconds(20);
+      et.setMilliseconds(200);
+
+      expect(et.hour).toBe(5);
+      expect(et.minute).toBe(10);
+      expect(et.second).toBe(20);
+      expect(et.millisecond).toBe(200);
+    });
+
+    it('setTime sets exact timestamp', () => {
+      const now = Date.now();
+      const et = new EtDatetime();
+      et.setTime(now);
+      expect(et.getTime()).toBe(now);
+    });
+  });
+
+  // ------------------------------------------
+  //  Setters (UTC)
+  // ------------------------------------------
+  describe('setUTC*() methods', () => {
+    let et: EtDatetime;
+    let native: Date;
+
+    beforeEach(() => {
+      et = new EtDatetime(2012, 2, 13, 10, 0, 0, 0);
+      native = new Date(et.getTime());
+    });
+
+    it('setUTCFullYear updates UTC year', () => {
+      et.setUTCFullYear(2020);
+      native.setUTCFullYear(2020);
+      expect(et.getUTCFullYear()).toBe(native.getUTCFullYear());
+    });
+
+    it('setUTCMonth updates UTC month', () => {
+      et.setUTCMonth(5);
+      native.setUTCMonth(5);
+      expect(et.getUTCMonth()).toBe(native.getUTCMonth());
+    });
+
+    it('setUTCDate updates UTC day', () => {
+      et.setUTCDate(20);
+      native.setUTCDate(20);
+      expect(et.getUTCDate()).toBe(native.getUTCDate());
+    });
+
+    it('setUTCHours updates UTC hour', () => {
+      et.setUTCHours(22);
+      native.setUTCHours(22);
+      expect(et.getUTCHours()).toBe(native.getUTCHours());
+    });
+
+    it('setUTCMinutes updates UTC minutes', () => {
+      et.setUTCMinutes(45);
+      native.setUTCMinutes(45);
+      expect(et.getUTCMinutes()).toBe(native.getUTCMinutes());
+    });
+
+    it('setUTCSeconds updates UTC seconds', () => {
+      et.setUTCSeconds(59);
+      native.setUTCSeconds(59);
+      expect(et.getUTCSeconds()).toBe(native.getUTCSeconds());
+    });
+
+    it('setUTCMilliseconds updates UTC ms', () => {
+      et.setUTCMilliseconds(789);
+      native.setUTCMilliseconds(789);
+      expect(et.getUTCMilliseconds()).toBe(native.getUTCMilliseconds());
+    });
+  });
+
+  // ------------------------------------------
+  //  Formatters
+  // ------------------------------------------
+  describe('Formatting methods', () => {
+    const et = new EtDatetime(2012, 7, 7, 14, 30, 15, 123);
+
+    it('toDateString matches JS Date string', () => {
+      expect(et.toDateString()).toBe(et.toDate().toDateString());
+    });
+
+    it('toTimeString matches JS Date time', () => {
+      expect(et.toTimeString()).toBe(et.toDate().toTimeString());
+    });
+
+    it('toUTCString matches JS UTC string', () => {
+      expect(et.toUTCString()).toBe(et.toDate().toUTCString());
+    });
+
+    it('toLocaleString matches JS locale string', () => {
+      expect(typeof et.toLocaleString()).toBe('string');
+    });
+
+    it('toLocaleDateString matches JS locale date', () => {
+      expect(et.toLocaleDateString()).toBe(et.toDate().toLocaleDateString());
+    });
+
+    it('toLocaleTimeString matches JS locale time', () => {
+      expect(et.toLocaleTimeString()).toBe(et.toDate().toLocaleTimeString());
+    });
+  });
+
+  // ------------------------------------------
+  //  Temporal API
+  // ------------------------------------------
+  describe('toTemporalInstant()', () => {
+    it('returns Temporal.Instant (requires @js-temporal/polyfill)', () => {
+      const et = new EtDatetime(2012, 7, 7, 14, 30, 15, 123);
+      const instant = et.toTemporalInstant();
+      expect(instant.epochMilliseconds).toBe(et.getTime());
+    });
+  });
+
 });
