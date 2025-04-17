@@ -23,6 +23,7 @@
 import Datetime from '../Interfaces/EDT';
 import { constants } from '../utils/constants';
 import Duration from '../utils/duration';
+import { Temporal } from '@js-temporal/polyfill';
 
 class EtDatetime implements Datetime {
   /** Epoch-based timestamp in milliseconds (Unix) */
@@ -428,6 +429,314 @@ class EtDatetime implements Datetime {
   toDate(): Date {
     return new Date(this.moment);
   }
+
+  /**
+ * Returns the day of the week (0–6), where 0 is Sunday and 6 is Saturday.
+ * Equivalent to JavaScript Date.prototype.getDay().
+ */
+  getDay(): number {
+    return this.weekday;
+  }
+
+  /**
+   * Returns the day of the month (1–31) in UTC.
+   * Equivalent to Date.prototype.getUTCDate().
+   */
+  getUTCDate(): number {
+    return new Date(this.moment).getUTCDate();
+  }
+
+  /**
+   * Returns the day of the week in UTC (0–6), where 0 is Sunday.
+   * Equivalent to Date.prototype.getUTCDay().
+   */
+  getUTCDay(): number {
+    return new Date(this.moment).getUTCDay();
+  }
+
+  /**
+   * Returns the full year (e.g. 2024) in UTC.
+   * Equivalent to Date.prototype.getUTCFullYear().
+   */
+  getUTCFullYear(): number {
+    return new Date(this.moment).getUTCFullYear();
+  }
+
+  /**
+   * Returns the month (0–11) in UTC.
+   * Equivalent to Date.prototype.getUTCMonth().
+   */
+  getUTCMonth(): number {
+    return new Date(this.moment).getUTCMonth();
+  }
+
+  /**
+   * Returns the hour (0–23) in UTC.
+   * Equivalent to Date.prototype.getUTCHours().
+   */
+  getUTCHours(): number {
+    return new Date(this.moment).getUTCHours();
+  }
+
+  /**
+   * Returns the minute (0–59) in UTC.
+   * Equivalent to Date.prototype.getUTCMinutes().
+   */
+  getUTCMinutes(): number {
+    return new Date(this.moment).getUTCMinutes();
+  }
+
+  /**
+   * Returns the second (0–59) in UTC.
+   * Equivalent to Date.prototype.getUTCSeconds().
+   */
+  getUTCSeconds(): number {
+    return new Date(this.moment).getUTCSeconds();
+  }
+
+  /**
+   * Returns the milliseconds (0–999) in UTC.
+   * Equivalent to Date.prototype.getUTCMilliseconds().
+   */
+  getUTCMilliseconds(): number {
+    return new Date(this.moment).getUTCMilliseconds();
+  }
+
+  /**
+   * Returns the year minus 1900 (e.g., 124 for 2024).
+   * Deprecated in JavaScript, included here for compatibility.
+   */
+  getYear(): number {
+    return this.getFullYear() - 1900;
+  }
+
+
+  /**
+ * Sets the year (offset from 1900), used for legacy JavaScript compatibility.
+ * Equivalent to Date.prototype.setYear().
+ * @param year A number representing the year minus 1900
+ */
+  setYear(year: number): void {
+    this.setFullYear(year + 1900);
+  }
+
+  /**
+   * Sets the day of the month (1–30 for Ethiopian calendar).
+   * @param day The day of the month to set.
+   */
+  setDate(day: number): void {
+    const { year, month } = this;
+    this._updateFromComponents(year, month, day, this.hour, this.minute, this.second, this.millisecond);
+  }
+
+  /**
+   * Sets the full Ethiopian year.
+   * @param year The full year (e.g. 2016).
+   */
+  setFullYear(year: number): void {
+    this._updateFromComponents(year, this.month, this.day, this.hour, this.minute, this.second, this.millisecond);
+  }
+
+  /**
+   * Sets the Ethiopian month (0-indexed to match JavaScript Date).
+   * @param month Zero-based month index (0 = Meskerem).
+   */
+  setMonth(month: number): void {
+    this._updateFromComponents(this.year, month + 1, this.day, this.hour, this.minute, this.second, this.millisecond);
+  }
+
+  /**
+   * Sets the hour of the day (0–23).
+   * @param hours The hour to set.
+   */
+  setHours(hours: number): void {
+    this._updateFromComponents(this.year, this.month, this.day, hours, this.minute, this.second, this.millisecond);
+  }
+
+  /**
+   * Sets the minute (0–59).
+   * @param minutes The minute to set.
+   */
+  setMinutes(minutes: number): void {
+    this._updateFromComponents(this.year, this.month, this.day, this.hour, minutes, this.second, this.millisecond);
+  }
+
+  /**
+   * Sets the second (0–59).
+   * @param seconds The second to set.
+   */
+  setSeconds(seconds: number): void {
+    this._updateFromComponents(this.year, this.month, this.day, this.hour, this.minute, seconds, this.millisecond);
+  }
+
+  /**
+   * Sets the milliseconds (0–999).
+   * @param ms The milliseconds to set.
+   */
+  setMilliseconds(ms: number): void {
+    this._updateFromComponents(this.year, this.month, this.day, this.hour, this.minute, this.second, ms);
+  }
+
+  /**
+   * Sets the timestamp (in milliseconds since the Unix epoch).
+   * @param timestamp Milliseconds since epoch.
+   */
+  setTime(timestamp: number): void {
+    this.fromMillisecondsSinceEpoch(timestamp);
+  }
+
+  /**
+   * Sets the UTC day of the month.
+   * @param day The UTC day to set.
+   */
+  setUTCDate(day: number): void {
+    const d = new Date(this.moment);
+    d.setUTCDate(day);
+    this.fromMillisecondsSinceEpoch(d.getTime());
+  }
+
+  /**
+   * Sets the UTC full year.
+   * @param year The UTC year to set.
+   */
+  setUTCFullYear(year: number): void {
+    const d = new Date(this.moment);
+    d.setUTCFullYear(year);
+    this.fromMillisecondsSinceEpoch(d.getTime());
+  }
+
+  /**
+   * Sets the UTC hour.
+   * @param hours The UTC hour to set.
+   */
+  setUTCHours(hours: number): void {
+    const d = new Date(this.moment);
+    d.setUTCHours(hours);
+    this.fromMillisecondsSinceEpoch(d.getTime());
+  }
+
+  /**
+   * Sets the UTC minute.
+   * @param minutes The UTC minutes to set.
+   */
+  setUTCMinutes(minutes: number): void {
+    const d = new Date(this.moment);
+    d.setUTCMinutes(minutes);
+    this.fromMillisecondsSinceEpoch(d.getTime());
+  }
+
+  /**
+   * Sets the UTC second.
+   * @param seconds The UTC seconds to set.
+   */
+  setUTCSeconds(seconds: number): void {
+    const d = new Date(this.moment);
+    d.setUTCSeconds(seconds);
+    this.fromMillisecondsSinceEpoch(d.getTime());
+  }
+
+  /**
+   * Sets the UTC milliseconds.
+   * @param ms The UTC milliseconds to set.
+   */
+  setUTCMilliseconds(ms: number): void {
+    const d = new Date(this.moment);
+    d.setUTCMilliseconds(ms);
+    this.fromMillisecondsSinceEpoch(d.getTime());
+  }
+
+  /**
+   * Sets the UTC month (0–11).
+   * @param month The UTC month to set.
+   */
+  setUTCMonth(month: number): void {
+    const d = new Date(this.moment);
+    d.setUTCMonth(month);
+    this.fromMillisecondsSinceEpoch(d.getTime());
+  }
+
+  /**
+ * Updates internal `fixed` and `moment` values from full date-time components.
+ *
+ * @param year Ethiopian year
+ * @param month Ethiopian month (1–13)
+ * @param day Ethiopian day of month (1–30)
+ * @param hour Hour (0–23)
+ * @param minute Minute (0–59)
+ * @param second Second (0–59)
+ * @param millisecond Millisecond (0–999)
+ */
+  private _updateFromComponents(
+    year: number,
+    month: number,
+    day: number,
+    hour: number,
+    minute: number,
+    second: number,
+    millisecond: number
+  ): void {
+    this.fixed = this.fixedFromEthiopic(year, month, day);
+    this.moment = this.dateToEpoch(year, month, day, hour, minute, second, millisecond);
+  }
+
+
+  // Formatters
+  /**
+ * Returns a human-readable date string using system locale.
+ * Equivalent to Date.prototype.toDateString().
+ */
+  toDateString(): string {
+    return this.toDate().toDateString();
+  }
+
+  /**
+   * Returns a human-readable time string using system locale.
+   * Equivalent to Date.prototype.toTimeString().
+   */
+  toTimeString(): string {
+    return this.toDate().toTimeString();
+  }
+
+  /**
+   * Returns a UTC date-time string.
+   * Equivalent to Date.prototype.toUTCString().
+   */
+  toUTCString(): string {
+    return this.toDate().toUTCString();
+  }
+
+  /**
+   * Returns a locale-sensitive string representation of the date and time.
+   * Equivalent to Date.prototype.toLocaleString().
+   */
+  toLocaleString(): string {
+    return this.toDate().toLocaleString();
+  }
+
+  /**
+   * Returns a locale-sensitive string of just the date portion.
+   * Equivalent to Date.prototype.toLocaleDateString().
+   */
+  toLocaleDateString(): string {
+    return this.toDate().toLocaleDateString();
+  }
+
+  /**
+   * Returns a locale-sensitive string of just the time portion.
+   * Equivalent to Date.prototype.toLocaleTimeString().
+   */
+  toLocaleTimeString(): string {
+    return this.toDate().toLocaleTimeString();
+  }
+
+  /**
+   * Returns a Temporal.Instant object representing this date-time.
+   * Requires Temporal API (ES2024) or @js-temporal/polyfill.
+   */
+  toTemporalInstant(): Temporal.Instant {
+    return Temporal.Instant.fromEpochMilliseconds(this.moment);
+  }
+
 }
 
 export default EtDatetime;
