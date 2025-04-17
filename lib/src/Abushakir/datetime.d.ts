@@ -17,6 +17,7 @@
  */
 import Datetime from '../Interfaces/EDT';
 import Duration from '../utils/duration';
+import { Temporal } from '@js-temporal/polyfill';
 declare class EtDatetime implements Datetime {
     /** Epoch-based timestamp in milliseconds (Unix) */
     moment: number;
@@ -179,5 +180,183 @@ declare class EtDatetime implements Datetime {
      * Converts EtDatetime to native JavaScript Date.
      */
     toDate(): Date;
+    /**
+   * Returns the day of the week (0–6), where 0 is Sunday and 6 is Saturday.
+   * Equivalent to JavaScript Date.prototype.getDay().
+   */
+    getDay(): number;
+    /**
+     * Returns the day of the month (1–31) in UTC.
+     * Equivalent to Date.prototype.getUTCDate().
+     */
+    getUTCDate(): number;
+    /**
+     * Returns the day of the week in UTC (0–6), where 0 is Sunday.
+     * Equivalent to Date.prototype.getUTCDay().
+     */
+    getUTCDay(): number;
+    /**
+     * Returns the full year (e.g. 2024) in UTC.
+     * Equivalent to Date.prototype.getUTCFullYear().
+     */
+    getUTCFullYear(): number;
+    /**
+     * Returns the month (0–11) in UTC.
+     * Equivalent to Date.prototype.getUTCMonth().
+     */
+    getUTCMonth(): number;
+    /**
+     * Returns the hour (0–23) in UTC.
+     * Equivalent to Date.prototype.getUTCHours().
+     */
+    getUTCHours(): number;
+    /**
+     * Returns the minute (0–59) in UTC.
+     * Equivalent to Date.prototype.getUTCMinutes().
+     */
+    getUTCMinutes(): number;
+    /**
+     * Returns the second (0–59) in UTC.
+     * Equivalent to Date.prototype.getUTCSeconds().
+     */
+    getUTCSeconds(): number;
+    /**
+     * Returns the milliseconds (0–999) in UTC.
+     * Equivalent to Date.prototype.getUTCMilliseconds().
+     */
+    getUTCMilliseconds(): number;
+    /**
+     * Returns the year minus 1900 (e.g., 124 for 2024).
+     * Deprecated in JavaScript, included here for compatibility.
+     */
+    getYear(): number;
+    /**
+   * Sets the year (offset from 1900), used for legacy JavaScript compatibility.
+   * Equivalent to Date.prototype.setYear().
+   * @param year A number representing the year minus 1900
+   */
+    setYear(year: number): void;
+    /**
+     * Sets the day of the month (1–30 for Ethiopian calendar).
+     * @param day The day of the month to set.
+     */
+    setDate(day: number): void;
+    /**
+     * Sets the full Ethiopian year.
+     * @param year The full year (e.g. 2016).
+     */
+    setFullYear(year: number): void;
+    /**
+     * Sets the Ethiopian month (0-indexed to match JavaScript Date).
+     * @param month Zero-based month index (0 = Meskerem).
+     */
+    setMonth(month: number): void;
+    /**
+     * Sets the hour of the day (0–23).
+     * @param hours The hour to set.
+     */
+    setHours(hours: number): void;
+    /**
+     * Sets the minute (0–59).
+     * @param minutes The minute to set.
+     */
+    setMinutes(minutes: number): void;
+    /**
+     * Sets the second (0–59).
+     * @param seconds The second to set.
+     */
+    setSeconds(seconds: number): void;
+    /**
+     * Sets the milliseconds (0–999).
+     * @param ms The milliseconds to set.
+     */
+    setMilliseconds(ms: number): void;
+    /**
+     * Sets the timestamp (in milliseconds since the Unix epoch).
+     * @param timestamp Milliseconds since epoch.
+     */
+    setTime(timestamp: number): void;
+    /**
+     * Sets the UTC day of the month.
+     * @param day The UTC day to set.
+     */
+    setUTCDate(day: number): void;
+    /**
+     * Sets the UTC full year.
+     * @param year The UTC year to set.
+     */
+    setUTCFullYear(year: number): void;
+    /**
+     * Sets the UTC hour.
+     * @param hours The UTC hour to set.
+     */
+    setUTCHours(hours: number): void;
+    /**
+     * Sets the UTC minute.
+     * @param minutes The UTC minutes to set.
+     */
+    setUTCMinutes(minutes: number): void;
+    /**
+     * Sets the UTC second.
+     * @param seconds The UTC seconds to set.
+     */
+    setUTCSeconds(seconds: number): void;
+    /**
+     * Sets the UTC milliseconds.
+     * @param ms The UTC milliseconds to set.
+     */
+    setUTCMilliseconds(ms: number): void;
+    /**
+     * Sets the UTC month (0–11).
+     * @param month The UTC month to set.
+     */
+    setUTCMonth(month: number): void;
+    /**
+   * Updates internal `fixed` and `moment` values from full date-time components.
+   *
+   * @param year Ethiopian year
+   * @param month Ethiopian month (1–13)
+   * @param day Ethiopian day of month (1–30)
+   * @param hour Hour (0–23)
+   * @param minute Minute (0–59)
+   * @param second Second (0–59)
+   * @param millisecond Millisecond (0–999)
+   */
+    private _updateFromComponents;
+    /**
+   * Returns a human-readable date string using system locale.
+   * Equivalent to Date.prototype.toDateString().
+   */
+    toDateString(): string;
+    /**
+     * Returns a human-readable time string using system locale.
+     * Equivalent to Date.prototype.toTimeString().
+     */
+    toTimeString(): string;
+    /**
+     * Returns a UTC date-time string.
+     * Equivalent to Date.prototype.toUTCString().
+     */
+    toUTCString(): string;
+    /**
+     * Returns a locale-sensitive string representation of the date and time.
+     * Equivalent to Date.prototype.toLocaleString().
+     */
+    toLocaleString(): string;
+    /**
+     * Returns a locale-sensitive string of just the date portion.
+     * Equivalent to Date.prototype.toLocaleDateString().
+     */
+    toLocaleDateString(): string;
+    /**
+     * Returns a locale-sensitive string of just the time portion.
+     * Equivalent to Date.prototype.toLocaleTimeString().
+     */
+    toLocaleTimeString(): string;
+    /**
+     * Returns a Temporal.Instant object representing this date-time.
+     * Requires Temporal API (ES2024) or @js-temporal/polyfill.
+     */
+    toTemporalInstant(): Temporal.Instant;
 }
 export default EtDatetime;

@@ -15,7 +15,8 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
     "prerelease": "npm run release -- --prerelease",
-    "release": "standard-version"
+    "release": "standard-version",
+    "release:patch": "npm version patch && git push && git push --tags && npm publish --access public"
   },
   "files": [
     "lib/**/*"

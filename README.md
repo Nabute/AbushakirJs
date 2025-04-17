@@ -1,133 +1,148 @@
-# AbushakirJs \(ባሕረ ሃሳብ\)
+# AbushakirJs (ባሕረ ሃሳብ)
 
-"Bahire Hasab /'bəhrɛ həsəb'/ " simply means "An age with a descriptive and chronological number". In some books it can also be found as "Hasabe Bahir", in a sense giving time an analogy, resembling a sea.
+> **Bahire Hasab /'bəhrɛ həsəb/**" means _“An age with a descriptive and chronological number.”_ It's also seen as **Hasabe Bahir**, likening time to a vast sea.
 
-The words Bahire Hasab originate from the ancient language of Ge'ez, \( Arabic: Abu Shakir\) is a time-tracking method, devised by the 12th pope of Alexandria, Pope St. Dimitri.
+Originating from **Ge’ez** and known in Arabic as **Abu Shakir**, this system was devised by the 12th Coptic Pope of Alexandria, **Pope St. Dimitri**, to track time through the Ethiopian calendar.
 
-This package allows developers to implement Ethiopian Calendar and Datetime System in their application\(s\)\`.
+---
 
-This package is implemented using the [UNIX EPOCH](https://en.wikipedia.org/wiki/Unix_time) which means it's not a conversion of any other calendar system into Ethiopian, for instance, Gregorian Calendar.
+## What is AbushakirJs?
 
-Unix Epoch is measured using milliseconds since 01 Jan, 1970 UTC. In UNIX EPOCH leap seconds are ignored.
+**AbushakirJs** is a fully native JavaScript and TypeScript library that implements the **Ethiopian calendar and datetime system**, based on the **UNIX Epoch** (milliseconds since January 1, 1970 UTC). It is **not a conversion layer** over Gregorian — it's a first-class timekeeping model.
 
-## Getting started
+- Works directly with the Ethiopian calendar  
+- Handles date-time, holidays, feasts, and calendar math  
+- ESDate-compatible API (new!)  
+- Ideal for frontend and backend usage (Node, browsers)
+
+---
+
+## Getting Started
+
+### Install
 
 ```bash
 npm i abushakir
 ```
 
-## Import it
+---
 
-```typescript
-import { EtDatetime, ETC, BahireHasab, ConvertToEthiopic } from 'abushakir';
+### Import
+
+```ts
+import {
+  EtDatetime,
+  ETC,
+  BahireHasab,
+  ConvertToEthiopic
+} from 'abushakir';
 ```
-## Documentation
-[AbushakirJs](https://nabute925.gitbook.io/abushakir_js/)
 
-## Demo
-[Ethiopian Calendar](https://github.com/Nabute/Abushakir-VueJs)
+---
+
+## Documentation
+
+- **Docs:** [AbushakirJs Docs →](https://nabute925.gitbook.io/abushakir_js/)
+- **Demo App:** [Ethiopian Calendar (Vue)](https://github.com/Nabute/Abushakir-VueJs)
+
+---
+
+## Features
+
+### Ethiopian Datetime (`EtDatetime`)
+
+```ts
+const now = new EtDatetime(); // 2012-07-28T17:18:31.466
+console.log(now.date); // { year: 2012, month: 7, day: 28 }
+console.log(now.time); // { h: 17, m: 18, s: 31 }
+```
+
+Supports:
+
+- Full date-time creation
+- Time arithmetic (`add`, `subtract`, `difference`)
+- Comparison methods (`isAfter`, `isBefore`, `isAtSameMomentAs`)
+- ISO 8601 output
+- Temporal API (`toTemporalInstant()`)
+- ECMAScript-style API:
+  - `getDay`, `getFullYear`, `getMonth`, `getDate`, `setDate`, etc.
+  - `toDateString`, `toLocaleString`, `toUTCString`, etc.
+
+---
+
+### Calendar Grid (`ETC`)
+
+```ts
+const calendar = new ETC(2011, 13, 4);
+calendar.monthDays();            // [2012, 7, 1, 1]
+calendar.monthDays(true, true);  // Iterable month representation
+console.log(calendar.nextMonth); // ETC instance for next month
+console.log(calendar.prevYear);  // ETC instance for same month last year
+```
+
+---
+
+### Bahire Hasab (የባሕረ ሐሳብ ሒሳብ)
+
+```ts
+const bh = new BahireHasab(2011);
+bh.getEvangelist(true); // => ሉቃስ
+bh.getSingleBealOrTsom('ትንሳኤ'); // => {month: ሚያዝያ, date: 20}
+const fasts = bh.allAtswamat;
+```
+
+---
+
+### Arabic to Ethiopic Numerals
+
+```ts
+const nums = [1, 10, 105, 9999];
+nums.map(ConvertToEthiopic);
+// Output: ['፩', '፲', '፻፭', '፺፱፻፺፱']
+```
+
+---
+
+### Calendar Conversion
+
+#### Gregorian → Ethiopian
+
+```ts
+const gregorian = Date.now();
+const ethiopian = new EtDatetime(gregorian);
+console.log(ethiopian.toIso8601String());
+```
+
+#### Ethiopian → Gregorian
+
+```ts
+const etDate = new EtDatetime(2013, 1, 12);
+console.log(new Date(etDate.moment).toISOString());
+```
+
+---
 
 ## Example
 
-```typescript
-// Copyright 2012 ETC (2020 GC) Nabute. All rights reserved.
-// Use of this source code is governed by MIT license, which can be found
-// in the LICENSE file.
+```ts
+const et1 = new EtDatetime(2012, 7, 4);
+const et2 = new EtDatetime(2012, 7, 26);
 
-/// An Example of using the package to create and manipulate Ethiopian Date and
-/// Time with the unique Calendar system which includes the way ethiopians
-/// use to find movable feasts and holiday.
-
-import { EtDatetime, ETC, BahireHasab, ConvertToEthiopic } from '..';
-
-/**
- * Ethiopian Datetime Module [EtDatetime]
- */
-const now: EtDatetime = new EtDatetime(); // => 2012-07-28 17:18:31.466
-const nowDate = now.date; // => {year: 2012, month: 7, day: 28}
-const nowTIme = now.time; // => {h: 17, m: 18, s: 31}
-
-const covidFirstConfirmed: EtDatetime = new EtDatetime(2012, 7, 4);
-const covidFirstConfirmedEpoch: EtDatetime = new EtDatetime(covidFirstConfirmed.moment);
-
-// let covidFirstDeath: EtDatetime = EtDatetime.parse("2012-07-26 23:00:00");
-
-/// Comparison of two EtDatetime Instances
-// Duration daysWithOutDeath = covidFirstConfirmed.difference(covidFirstDeath);
-
-// daysWithOutDeath.inDays); // 22 days
-
-// assert(covidFirstDeath.isAfter(covidFirstConfirmed), true);
-
-// assert(covidFirstDeath.isBefore(now), true);
-
-covidFirstConfirmed.isAtSameMomentAs(covidFirstConfirmedEpoch);
-
-/**
- * Ethiopian Calendar Module [ETC]
- */
-const ethiopianCalendar: ETC = new ETC(2011, 13, 4);
-
-///
-ethiopianCalendar.monthDays(true, true); // Iterable Object of the given month
-ethiopianCalendar.monthDays(); // => [2012, 7, 1, 1]
-// [year, month, dateNumber, dateNameIndex], Monday as First weekday
-
-const nextmonth = ethiopianCalendar.nextMonth; // => ETC instance of nextMonth, same year
-const previousmonth = ethiopianCalendar.prevYear; // => ETC instance of prevYear, same month
-
-/**
- * Bahire Hasab Module [BahireHasab]
- */
-const bh: BahireHasab = new BahireHasab(2011);
-//  let bh: BahireHasab = new BahireHasab(); // Get's the current year
-
-bh.getEvangelist(true); // => ሉቃስ
-
-bh.getSingleBealOrTsom('ትንሳኤ'); // {month: ሚያዝያ, date: 20}
-
-const allFastings = bh.allAtswamat; // => List of All fasting and Movable holidays
-
-/**
- * Arabic or English number (1,2,3...) to Ethiopic or GE'EZ number Convertor
- */
-
-const testNums: number[] = [1, 10, 15, 20, 25, 78, 105, 333, 450, 600, 1000, 1001, 1010, 1056, 1200, 2013, 9999, 10000];
-
-for (const num of testNums) {
-  console.log(ConvertToEthiopic(num)); // [፩, ፲, ፲፭, ፳, ፳፭, ፸፰, ፻፭, ፫፻፴፫, ፬፻፶, ፮፻, ፲፻, ፲፻፩, ፲፻፲, ፲፻፶፮, ፲፪፻, ፳፻፲፫, ፺፱፻፺፱, ፻፻]
-}
-
-/**
- * Conversion from any calendar (for instance, from Gregorian) into Ethiopian Calendar.
- */
-const gregorian1: number = Date.now();
-const ethiopian1: EtDatetime = new EtDatetime(gregorian1);
-
-console.log(`Gregorian := ${new Date(gregorian1).toISOString()} is equivalent to Ethiopian ${ethiopian1.toIso8601String()}`);
-// Gregorian := 2020-09-22T22:43:33.077Z is equivalent to Ethiopian 2013-01-12T22:43:33.077
-
-
-/**
- * Conversion from Ethiopian Calendar into any calendar (for instance, to Gregorian).
- */
-const ethiopian: EtDatetime = new EtDatetime();
-const gregorian: Date = new Date(ethiopian.moment);
-
-console.log(`Ethiopian ${ethiopian.toIso8601String()} is equivalent to Gregorian := ${gregorian.toISOString()}`);
-// Ethiopian 2013-01-12T22:43:33.078 is equivalent to Gregorian := 2020-09-22T22:43:33.078Z
-
-console.log(`Ethiopian EPOCH := ${ethiopian.moment}`); // Ethiopian EPOCH := 1600814613078
-console.log(`Gregorian EPOCH := ${gregorian.valueOf()}`); // Gregorian EPOCH := 1600814613078
-
-
+const duration = et2.difference(et1);
+console.log(duration.inDays); // 22
+console.log(et2.isAfter(et1)); // true
 ```
+
+---
 
 ## Contact
 
-If you want to contact me you can reach me at [nabute925@gmail.com](mailto:nabute925@gmail.com).
+Reach out with questions or feedback:  
+[nabute925@gmail.com](mailto:nabute925@gmail.com)
+
+---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Nabute/AbushakirJs/blob/master/LICENSE) file for details
-
+This project is licensed under the MIT License.  
+See the [LICENSE](https://github.com/Nabute/AbushakirJs/blob/master/LICENSE) file for details.
