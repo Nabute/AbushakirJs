@@ -510,7 +510,6 @@ class EtDatetime implements Datetime {
     return this.getFullYear() - 1900;
   }
 
-
   /**
    * Sets the year (offset from 1900), used for legacy JavaScript compatibility.
    * Equivalent to Date.prototype.setYear().
@@ -673,7 +672,7 @@ class EtDatetime implements Datetime {
     hour: number,
     minute: number,
     second: number,
-    millisecond: number
+    millisecond: number,
   ): void {
     this.fixed = this.fixedFromEthiopic(year, month, day);
     this.moment = this.dateToEpoch(year, month, day, hour, minute, second, millisecond);
@@ -734,7 +733,6 @@ class EtDatetime implements Datetime {
   toTemporalInstant(): Temporal.Instant {
     return Temporal.Instant.fromEpochMilliseconds(this.moment);
   }
-
 }
 
 export default EtDatetime;
